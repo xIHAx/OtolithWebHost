@@ -135,14 +135,16 @@ router.route('/authuser').post(function(req, res2)
         else {   
         bcrypt.compare(password, result.password, function(err, res) 
         {
+            console.log(res);
             console.log(result.verified);
             if(err || res == false) 
             {       
                 res2.send([{"auth": false}]);    
             }
-            if(result.verified == false){
+            else if(result.verified == false){
                 res2.send([{"auth": false}]);    
             }
+
             else 
             {      
                 res2.send([{"auth": true, "role": result.role, "userID":result._id, "mobile":result.mobile, "email":result.email, "address":result.address}]);   
@@ -150,7 +152,7 @@ router.route('/authuser').post(function(req, res2)
         });
     }   
     }); 
-}); 
+});
 
 router.route('/sendContact').post(function (req, res) {
     let senderName = req.body.contactFormFullname;
@@ -280,7 +282,7 @@ router.route('/verifyUser').post(function(req, res2)
             {       
                 res2.send([{"auth": false}]);    
             }
-            if(result.temporaryToken != token){
+            else if(result.temporaryToken != token){
                 res2.send([{"auth": false}]);    
             }
             else 
@@ -299,7 +301,7 @@ router.route('/verifyUser').post(function(req, res2)
         });
     }   
     }); 
-}); 
+});
 
 // get all Resident
 router.route('/getAllResident').get(function(req, res) {
