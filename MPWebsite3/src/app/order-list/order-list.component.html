@@ -1,0 +1,100 @@
+
+<br>
+<div class="section-title">
+  <h2> Order History</h2>
+<div class="main">
+<div class="form-group has-search">
+    <input type="text" (keydown)="search($event)" class="form-control" placeholder="Search Customer">
+</div>
+</div>
+</div>
+<!-- Order table -->
+<div class="table-responsive">
+
+      <table class="table table-hover">
+
+        <!-- Table head -->
+        <thead class="thead-dark">
+          <tr>
+            <th class="font-weight-bold">
+              <strong> Order ID #</strong>
+            </th>
+            <th class="font-weight-bold">
+              <strong>User ID</strong>
+            </th>
+            <th class="font-weight-bold">
+              <strong>Ordered By</strong>
+            </th>
+          
+            <th class="font-weight-bold">
+              <strong>Product</strong>
+            </th>
+            <th class="font-weight-bold">
+              <strong>Price</strong>
+            </th>
+            <th class="font-weight-bold">
+              <strong>Category</strong>
+            </th>
+            <th class="font-weight-bold">
+              <strong>Quantity</strong>
+            </th>
+            <th class="font-weight-bold">
+              <strong>Total Amount</strong>
+            </th>
+             <th class="font-weight-bold">
+              <strong>Order Date</strong>
+            </th>
+           
+           
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <!-- /.Table head -->
+
+        <!-- Table body -->
+        <tbody >
+
+          <!-- row -->
+          <tr *ngFor="let order of orders | paginate: { itemsPerPage: 6, currentPage: p }">
+            <th>  {{order.userID}} </th>
+
+            <th>  {{order._id}} </th>
+            
+            <td>{{order.fullname}}</td>
+
+            <td>{{order.product_name}}</td>
+
+            <td>{{order.price}}</td>
+
+            <td> {{order.category}}</td>
+
+            <td>{{order.quantity}}</td>
+
+            <td  class="font-weight-bold">{{order.amount | currency:'USD'}}</td>
+
+            <td>{{order.order_date | date : 'dd/MM/yyyy'}}</td>
+            
+
+            <td>
+                <button type="button" class="btn btn-success"  [routerLink]="['/orderInfo',order._id]" >View Details</button>        
+           </td>
+          
+          
+          </tr>
+          <!-- row -->
+        
+          
+
+        </tbody>
+        <!-- /.Table body -->
+
+      </table>
+      
+      <div class="center">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+     </div> 
+    </div>
+    <!-- /.Order table -->
+
+   

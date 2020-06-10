@@ -1,0 +1,48 @@
+
+  <div class="col-12">
+    <div class="site-block-half d-flex" >
+     <div class="image bg-image" ><img src={{productsInfo[0].image}} height="470" width="700">
+     
+    </div>
+      <div class="text py-5" >
+        <a [routerLink]="['/editProducts',_id]" *ngIf="service.isStaff()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><img src="./assets/imgs/edit.png" width="40" height="40"></a>			
+        <img  src="./assets/imgs/delete.png" name="imgbtn" width="40" height="40" (click)="deleteProducts()" style="margin-left: 10px;" *ngIf="service.isStaff()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+        <h1  class="font-family-serif h4 mb-3" >{{productsInfo[0].name}} </h1>
+      
+        
+      
+        <h2 class="font-family-serif h4 mb-3" style="color:green"> {{productsInfo[0].price | currency:'USD' }}  </h2>
+        <br>
+          <p><strong>Category : {{productsInfo[0].category}}</strong></p>
+          <p><strong>Availability : </strong>{{productsInfo[0].availability}}</p>
+          <p><strong>Last update : </strong>{{productsInfo[0].last_update  | date : 'dd/MM/yyyy'}}</p>
+      
+       <hr>
+        <p><a *ngIf="service.isLoggedIn()" (click)="addToCart()" class="btn btn-primary pill px-4 py-2 text-white"><i class="fa fa-shopping-cart"></i>   ADD TO CART</a>
+        <button *ngIf="service.isLoggedIn()" class="btn btn-outline-success mr-2" (click)="addToWishlist()" style="margin-left: 30px"><i  class="fa fa-heart-o" ></i> Add to Wishlist</button></p>
+      
+       <br>
+
+        <small><strong>*FREE SHIPPING ON ALL ORDERS</strong></small>
+ 
+
+  </div>
+  
+    </div>
+  </div>
+  <div class="row">        
+      <div class="col-12">
+            
+        <div class="container">
+        <div class="text py-5">
+              
+            <p><strong>Information :</strong></p>
+            <p>{{productsInfo[0].description}}</p>
+        
+         
+      </div>
+      </div>
+      </div>
+      </div>
+  
+

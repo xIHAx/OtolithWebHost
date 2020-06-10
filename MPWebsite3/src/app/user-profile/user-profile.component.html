@@ -1,0 +1,33 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <div class="container">
+    <h1>Your Profile:</h1>
+    <hr>
+    <div class="form-inline justify-content-center">
+      <ngx-qrcode
+      [elementType]= "elementType"
+      [value]="userID"
+      class="qrcode"
+    ></ngx-qrcode>
+    </div>  
+    <label for="name">Username:</label>
+    <p><input type="text" formControlName="name" id="name" disabled></p>
+    <label for="email">Email:</label>
+    <p><input type="email" formControlName="email" id="email" required></p>
+    <label for="role">User access level:</label>
+    <p><input type="text" formControlName="role" id="role" placeholder="" disabled></p>
+    <label for="role">Green Currency Amount:</label>
+    <p><input type="number" formControlName="greenCurrency" id="greenCurrency" placeholder="" disabled></p>
+    <label for="mobile">Mobile No.:</label>
+    <p><input type="text" formControlName="mobile" id="mobile" minlength="8" placeholder="Your Mobile No." required></p>
+    <label for="address">address:</label>
+    <p><input type="text" formControlName="address" id="address" required></p>
+    <label for="password">New Password (8 characters minimum):</label>
+    <p><input type="password" formControlName="password" id="password" placeholder="Your password" [(ngModel)]="account.password" minlength="8" required></p>
+    <label for="repassword">Retype Password:</label>
+    <p><input type="password" formControlName="repassword" id="repassword" placeholder="Retype password" /></p>
+    <app-password-strength-bar [passwordToCheck]="account.password" [barLabel]="barLabel"> </app-password-strength-bar>  
+    <hr>
+    <p><button class="updatebtn" type="submit">Update</button></p>
+  </div>
+  
+</form>

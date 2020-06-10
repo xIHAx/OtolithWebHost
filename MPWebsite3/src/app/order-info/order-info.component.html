@@ -1,0 +1,54 @@
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mx-auto text-center mb-5 section-heading">
+          <div class="section-title">
+          <h2 class="mb-5">Order Details</h2>
+          </div>
+          <h5 class="mb-5">Order ID # {{orderInfo[0]._id}}</h5>
+          <p><strong> Order Date : {{orderInfo[0].order_date | date : 'dd/MM/yyyy'}}</strong></p>
+        </div>
+      </div>
+     
+    
+      
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-6 mb-5 mb-md-0">
+              
+                <div class="img-border">
+                 <img  src={{orderInfo[0].image}} name ="orderImage" width="300" height="300">
+                 <p><strong>Product Name : {{orderInfo[0].product_name}}</strong></p>  
+                 <p>Price : {{orderInfo[0].price | currency:'USD'}}</p>
+                 <p>Category : {{orderInfo[0].category}}</p>
+                 <p>Quantity : {{orderInfo[0].quantity}}</p>
+                 <p>Total Amount : {{orderInfo[0].amount | currency:'USD'}}</p>
+    
+             </div>
+              
+            </div>
+            <div class="col-md-5 ml-auto">
+              
+    
+              <div class="section-heading text-left">
+             
+              </div>
+             <h5></h5>
+             <h5>Details ：</h5>
+             <p><strong>Ordered By : {{orderInfo[0].fullname}}</strong></p>
+             <p>Username : {{orderInfo[0].userID}}</p>
+             <p>Email : {{orderInfo[0].email}}</p>
+             <p>Phone : {{orderInfo[0].phone}}</p>
+             <p>Address : {{orderInfo[0].address}}</p>
+             <br>
+             <h5>Billing Information ：</h5>
+             <p>Card Number : {{orderInfo[0].card_no}}</p>
+             <p>Card Type : {{orderInfo[0].card_type}}</p>
+             <p>Expiration : {{orderInfo[0].expiration}}</p>
+             <p>CVC : {{orderInfo[0].cvc}}</p>
+
+            </div>
+          </div>
+        </div>
+    </div>
+    

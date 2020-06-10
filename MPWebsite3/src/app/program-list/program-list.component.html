@@ -1,0 +1,56 @@
+<br>
+<div class="section-title">
+  <h2>List of program & workshops</h2>
+
+<div class="main">
+  <div class="form-group has-search">
+  <input type="text" (keydown)="search($event)" class="form-control" placeholder="Search for program/workshops">
+  </div>
+</div>
+</div>
+<div class="user-list">
+    <table class="table table-hover">
+      
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Title</th>
+            <th scope="col">Price</th>
+            <th scope="col">Category</th>
+            <th scope="col">Date</th>
+            <th scope="col">Time</th>
+            <th scope="col">Attendees</th>
+            <th scope="col">Capacity</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let i of programs">
+        <a [routerLink]="['/programmesInfo',i._id]" >
+          <td data-label="qr">
+            <img  src={{i.image}} name="Image" width="200" height="145">
+          </td>
+        </a>
+          <td data-label="name" [routerLink]="['/programmesInfo',i._id]" style="width:15%">{{ i.name}}</td>
+          <td data-label="price" [routerLink]="['/programmesInfo',i._id]">{{ i.price | currency:'USD'}}</td>
+          <td data-label="category" [routerLink]="['/programmesInfo',i._id]">{{ i.category}}</td>
+          <td data-label="date" [routerLink]="['/programmesInfo',i._id]">{{ i.date | date : 'dd/MM/yyyy' }}</td>
+          <td data-label="time" [routerLink]="['/programmesInfo',i._id]">{{ i.time }}</td>
+            <td data-label="attendees">
+                <select name="attendees" id={{i._id+1}} class="browser-default custom-select custom-select-lg mb-3">
+                    <option *ngFor="let obj of i.slot">{{obj}}</option>
+                </select>
+                <div>
+                    <input type="text" class="form-control" id={{i._id}} name="username">
+                </div>
+                <div>
+                    <button type="button" class="btn btn-outline-success btn-block" (click)="addToPrograms(i._id)">Add</button>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-outline-danger btn-block" (click)="removeFromPrograms(i._id)">Remove</button>
+                </div>
+            </td>
+            <td data-label="capacity" [routerLink]="['/programmesInfo',i._id]">{{ i.capacity }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

@@ -1,0 +1,75 @@
+<div class="site-section site-section-sm" >
+    <div class="container">
+      <div class="row" >
+        
+        <div class="col-md-12 col-lg-8 mb-5" >
+          
+            
+  <form [formGroup]="editProductsForm"  class="p-5 bg-white">
+      <h2>Edit Products</h2>
+      <hr>
+     
+      
+      <div class="row form-group">
+        <div class="col-md-12 mb-3 mb-md-0">
+          <label class="font-weight-bold" for="name">Name:</label>
+          <input type="text" id="name" formControlName="name" class="form-control">
+        </div>
+      </div>
+
+      <div class="row form-group">
+          <div class="col-md-12 mb-3 mb-md-0">
+            <label class="font-weight-bold" for="price">Price:</label>
+            <input type="text" id="price" formControlName="price" class="form-control">
+          </div>
+        </div>
+
+
+        <div class="row form-group">
+          <div class="col-md-12 mb-3 mb-md-0">
+            <label class="font-weight-bold" for="category">Category:</label>
+            <select type="text" id="category" class="form-control" formControlName="category">
+              <option value="" disabled selected>Select Category...</option>
+              <option>Vegetable</option>
+              <option>Fish</option>
+              <option>Fertilizer</option>
+              <option>Program</option>
+              <option>Workshop</option>
+            </select>
+          </div>
+        </div>
+
+
+        <div class="row form-group">
+            <div class="col-md-12 mb-3 mb-md-0">
+              <label class="font-weight-bold" for="description">Description:</label>
+              <textarea cols="35" rows="15" id="description" formControlName="description" class="form-control"></textarea>
+            </div>
+          </div>
+
+
+    <div class="row form-group">
+      <div class="col-md-12 mb-3 mb-md-0">
+        <label class="font-weight-bold" for="availability">Availability:</label>
+        <input type="text" id="availability" formControlName="availability" class="form-control" >
+      </div>
+    </div>
+
+    <div class="row form-group">
+      <div class="col-md-12 mb-3 mb-md-0">
+      <label class="font-weight-bold" for="image">Image:</label>
+      <br>
+      <input type="file" id="image" formControlName="image" (change)="handleUpload($event)" accept=".png, .jpg, .jpeg, .pdf">
+        </div>
+  </div>
+      <br>
+      <hr>             
+                      
+          <button type="submit" class="btn btn-primary"  (click)="editProducts(productsInfo[0]._id)" >Save changes </button>
+                </form>
+       
+     
+  </div>
+  </div>
+  </div>
+  </div>

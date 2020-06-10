@@ -1,0 +1,51 @@
+<br>
+<div class="section-title">
+  <h2>List of projects</h2>
+
+<div class="main">
+  <div class="form-group has-search">
+  <input type="text" (keydown)="search($event)" class="form-control" placeholder="Search for project name">
+  </div>
+</div>
+</div>
+<div class="user-list">
+    <table class="table table-hover">
+      
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Project Title</th>
+            <th scope="col">Date Published</th>
+            <th scope="col">Project Details</th>
+            <th scope="col">Attendees</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let i of programs">
+        <a [routerLink]="['/programInfo',i._id]" >
+          <td data-label="qr">
+            <img  src={{i.image}} name="Image" width="200" height="145">
+          </td>
+        </a>
+          <td data-label="Username" [routerLink]="['/programInfo',i._id]">{{ i.title}}</td>
+          <td data-label="publish" [routerLink]="['/programInfo',i._id]">{{ i.publish }}</td>
+            <td data-label="body" [routerLink]="['/programInfo',i._id]"><p>{{ i.body }}</p></td>
+            <td data-label="attendees">
+                <select name="attendees" id={{i._id+1}} class="browser-default custom-select custom-select-lg mb-3">
+                    <option *ngFor="let obj of i.attendees">{{obj}}</option>
+                </select>
+                <div>
+                    <input type="text" class="form-control" id={{i._id}} name="username">
+                </div>
+                <div>
+                    <button type="button" class="btn btn-outline-success btn-block" (click)="addResident(i._id)">Add</button>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-outline-danger btn-block" (click)="removeResident(i._id)">Remove</button>
+                </div>
+            </td>
+          
+        </tr>
+      </tbody>
+    </table>
+  </div>

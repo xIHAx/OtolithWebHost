@@ -1,0 +1,61 @@
+  
+  .postProgramsBtn {
+    background-color: #5A8260;
+    font-size: 20px;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    border-radius: 25px;
+  }
+  .img-fluid{
+    width: 600px;
+    height: 450px;
+    }
+    .row{
+      margin: 10px 10px;
+    }
+  .postProgramsBtn:hover {
+    opacity: 1;
+  }
+
+  .center {
+    width:100%;
+    bottom:0px;
+    text-align:center;
+  }
+
+
+  .main {
+  width: 50%;
+  margin: 50px auto;
+  }
+
+
+  .has-search .form-control {
+  padding-left: 2.375rem;
+  }
+
+  .has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+  }
+
+  .d-inline-block{
+    text-align:right;
+    width:100%;
+    bottom:0px;
+  }
+
+  .card {
+    min-height: 200px;
+  }
