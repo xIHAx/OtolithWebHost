@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { ConnectionService } from '../connection.service';
+
 
 @Component({
   selector: 'app-user-profile',
@@ -22,7 +24,7 @@ export class UserProfileComponent implements OnInit {
   userDetails: any[];
   gCM: number;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private toastr: ToastrService) 
+  constructor(private fb: FormBuilder, private authService: AuthService, private toastr: ToastrService, private connectionService: ConnectionService) 
   { 
     
   }
@@ -39,6 +41,8 @@ export class UserProfileComponent implements OnInit {
         email: [sessionStorage.getItem("email"), Validators.email],
         mobile: sessionStorage.getItem("mobile"),
         address: sessionStorage.getItem("address"),
+        unitNo: sessionStorage.getItem("unitNo"),
+        housingType: sessionStorage.getItem("housingType"),
         role: sessionStorage.getItem("UserRole"),
         greenCurrency: this.gCM,
         password: '',
@@ -82,12 +86,43 @@ export class UserProfileComponent implements OnInit {
    
     //Update user with input from myForm 
     else{
-      this.toastr.success('User has been updated', 'Success');
-      this.authService.updateUser( this.myForm.value.name, this.myForm.value.password, this.myForm.value.email, this.myForm.value.mobile, this.myForm.value.address);
-      sessionStorage.setItem("address", this.myForm.value.address);
-      sessionStorage.setItem("email", this.myForm.value.email);
-      sessionStorage.setItem("mobile", this.myForm.value.mobile);
-      window.location.reload();
+      
+      var userHouseLoc
+      this.connectionService.getLocationByPostalCode(this.myForm.value.address).subscribe(location => {
+        userHouseLoc = location["results"][0]["ADDRESS"];
+        console.log(userHouseLoc);
+        
+        if(this.myForm.value.radioBtn == "Landed Housing"){
+
+          this.toastr.success('User has been updated', 'Success');
+          this.authService.updateUser( this.myForm.value.name, this.myForm.value.password, this.myForm.value.email, this.myForm.value.mobile, userHouseLoc, "not applicable", this.myForm.value.radioBtn);
+          sessionStorage.setItem("address", userHouseLoc);
+          sessionStorage.setItem("email", this.myForm.value.email);
+          sessionStorage.setItem("mobile", this.myForm.value.mobile);
+          sessionStorage.setItem("unitNo", this.myForm.value.unitNo);
+          sessionStorage.setItem("housingType", this.myForm.value.housingType);
+          window.location.reload();
+        }
+        else{
+
+          this.toastr.success('User has been updated', 'Success');
+          this.authService.updateUser( this.myForm.value.name, this.myForm.value.password, this.myForm.value.email, this.myForm.value.mobile, userHouseLoc, this.myForm.value.unitNo, this.myForm.value.radioBtn);
+          sessionStorage.setItem("address", userHouseLoc);
+          sessionStorage.setItem("email", this.myForm.value.email);
+          sessionStorage.setItem("mobile", this.myForm.value.mobile);
+          sessionStorage.setItem("unitNo", this.myForm.value.unitNo);
+          sessionStorage.setItem("housingType", this.myForm.value.housingType);
+          window.location.reload();
+        }
+
+      },
+      error => {
+        this.toastr.warning('Invalid Postal Code', 'Warning');
+        alert('Invalid Postal Code')
+        console.log("Error: ", error);
+      });
+
+
     }
 
   }

@@ -33,7 +33,7 @@ export class EmailValidationComponent implements OnInit {
       this.authService.verifyUser(this.myForm.value.name.trim(),
         this.myForm.value.password.trim(), this.myForm.value.token.trim()).subscribe(data => {
           this.results = data;
-        
+          console.log(data);
           if (this.results[0].auth)
           {
             this.authService.setSecureToken(this.myForm.value.name);
@@ -42,6 +42,8 @@ export class EmailValidationComponent implements OnInit {
             sessionStorage.setItem("email", this.results[0].email);
             sessionStorage.setItem("mobile", this.results[0].mobile);
             sessionStorage.setItem("userID", this.results[0].userID);
+            sessionStorage.setItem("unitNo", this.results[0].unitNo);
+            sessionStorage.setItem("housingType", this.results[0].housingType);
             sessionStorage.setItem("key", "loggin");
             this.toastr.success(this.myForm.value.name, 'Welcome!');
             this.router.navigateByUrl('/home');

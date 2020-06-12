@@ -95,6 +95,7 @@ export class RegisterComponent implements OnInit {
       },
       error => {
         this.toastr.warning('Invalid Postal Code', 'Warning');
+        alert('Invalid Postal Code')
         console.log("Error: ", error);
       });
       

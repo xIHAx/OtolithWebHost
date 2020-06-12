@@ -131,7 +131,7 @@ router.route('/authuser').post(function(req, res2)
     var username = req.body.username;     
     var password = req.body.password;
     
-    db.collection('users').findOne({"name": username}, { password: 1, role: 1, _id: 1, email:1, mobile:1, address:1 }, function(err, result) 
+    db.collection('users').findOne({"name": username}, { password: 1, role: 1, _id: 1, email:1, mobile:1, address:1, housingType:1, unitNo:1 }, function(err, result) 
     {   
         if (result == null) 
         res2.send([{"auth": false}]);
@@ -150,7 +150,7 @@ router.route('/authuser').post(function(req, res2)
 
             else 
             {      
-                res2.send([{"auth": true, "role": result.role, "userID":result._id, "mobile":result.mobile, "email":result.email, "address":result.address}]);   
+                res2.send([{"auth": true, "role": result.role, "userID":result._id, "mobile":result.mobile, "email":result.email, "address":result.address, "housingType": result.housingType, "unitNo": result.unitNo}]);   
             }    
         });
     }   
@@ -243,9 +243,9 @@ router.route('/reguser').post(function(req, res)
         '<p>Mobile Number: ' + mobile + '</p>' +
         '<p>Address: ' + address + ' Unit Number: '+ unitNo +' Type of housing: '+ housingType +'</p>' +
         '<p>Please enter this token: ' + temporaryToken +
-        'into the form after clicking on the "Verify Me" button bellow. <br>'+
+        ' into the form after clicking on the "Verify Me" button bellow. <br>'+
         'If you did not sign up with Otolith, please ignore this email or contact us at otolithmp@gmail.com</p><br>' + 
-        '<form action="http://localhost:3000/accountValidation"><input type="submit" value="Verify Me" /></form>',
+        '<a href="http://localhost:3000/accountValidation">Verify Me</a>',
         replyTo: email
     };
 
@@ -339,7 +339,6 @@ router.route('/resetPassword').post(function(req, res)
         'Dear Resident ' +'<br>'+ 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
         'Please click on the following link, or click on the reset password button to complete the process:<br>' +
         'http://localhost:3000/resetPassword/'   + token + '\n\n' + '<br>' +
-         '<form action=' + '"http://localhost:3000/resetPassword/'   + token + '">' + '<br><input type="submit" class="btn btn-success" value="Reset Password" /></form><br>'+
         'If you did not request this, please ignore this email and your password will remain unchanged.\n'
         
     };
@@ -450,10 +449,12 @@ router.route('/updateusers/:name').put(function(req, res)
     var email = req.body.email;
     var mobile = req.body.mobile;
     var address = req.body.address;
+    var unitNo = req.body.unitNo;
+    var housingType = req.body.housingType
 
     bcrypt.hash(password, BCRYPT_SALT_ROUNDS, function(err, hash)
     {
-        db.collection('users').updateMany( {"name": username}, {$set:{ "password": hash, "email": email, "mobile": mobile, "address":address }}, (err, result) => {
+        db.collection('users').updateMany( {"name": username}, {$set:{ "password": hash, "email": email, "mobile": mobile, "address":address, "unitNo": unitNo, "housingType": housingType }}, (err, result) => {
             if (err){
                 return console.log(err);
             } 

@@ -71,9 +71,9 @@ export class AuthService {
     return (this.getUserRole() == "user" || this.getUserRole() == "staff");   
   }
 
-  updateUser( username: string, password: string, email: string, mobile: string, address: string) {
+  updateUser( username: string, password: string, email: string, mobile: string, address: string, unitNo: string, housingType: string) {
     
-    return this.http.put<any[]>('./api/updateusers/' + username, { "username": username, "password": password, "email": email, "mobile": mobile, "address":address}
+    return this.http.put<any[]>('./api/updateusers/' + username, { "username": username, "password": password, "email": email, "mobile": mobile, "address":address, "unitNo": unitNo, "housingType":housingType}
     ).subscribe(
     data  => {
       console.log("PUT Request is successful ", data);  

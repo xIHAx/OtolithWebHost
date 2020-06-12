@@ -41,8 +41,12 @@ export class LoginComponent implements OnInit {
           {
             this.authService.setSecureToken(this.myForm.value.name);
             this.authService.setUserRole(this.results[0].role);
-          
+            console.log(this.results[0]);
+            console.log(this.results[0].unitNo);
+            console.log(this.results[0].housingType);
             sessionStorage.setItem("address", this.results[0].address);
+            sessionStorage.setItem("unitNo", this.results[0].unitNo);
+            sessionStorage.setItem("housingType", this.results[0].housingType);
             sessionStorage.setItem("email", this.results[0].email);
             sessionStorage.setItem("mobile", this.results[0].mobile);
             sessionStorage.setItem("userID", this.results[0].userID);
