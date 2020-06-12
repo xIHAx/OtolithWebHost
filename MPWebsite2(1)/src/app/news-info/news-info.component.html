@@ -1,0 +1,36 @@
+<div class="col-md-6 mx-auto text-center mb-5 section-heading">
+  <h2 class="mb-5">{{newsInfo[0].title}}</h2>
+  <p>Date Published:{{newsInfo[0].publish  | date : 'dd/MM/yyyy'}}</p> 
+  <br>
+  <img src={{newsInfo[0].image}} alt="" class="img-fluid">
+  <br>
+  <br>
+  
+  <a [routerLink]="['/editNews',_id]" *ngIf="service.isStaff()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><img src="./assets/imgs/edit.png" width="40" height="40"></a>
+          
+  <img src="./assets/imgs/delete.png" name="imgbtn" width="40" height="40" (click)="deleteNews()" style="margin-left: 10px;" *ngIf="service.isStaff()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+</div>
+
+<div class="row">        
+<div class="col-12">
+      
+  <div class="container">
+  <div class="text py-5">
+        
+    <p>Story : {{newsInfo[0].body}}</p>
+    
+   
+  </div>
+</div>
+</div>
+</div>
+  
+<div class="container">
+  
+  <disqus class="disqus" [identifier]="['/newsInfo',_id]"></disqus>
+
+</div>
+
+
+
+

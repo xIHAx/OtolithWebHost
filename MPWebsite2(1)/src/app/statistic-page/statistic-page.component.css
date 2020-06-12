@@ -1,0 +1,8 @@
+#divChart{
+    display: block;
+}
+.center {
+    width:100%;
+    bottom:0px;
+    text-align:center;
+  }

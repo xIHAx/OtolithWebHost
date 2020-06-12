@@ -1,0 +1,32 @@
+<div class="qr-scan-area">
+  <!-- This is the npm package in-charge of scanning the QR -->
+  <zxing-scanner
+    #scanner
+    [(device)]="currentDevice"
+    (scanSuccess)="onCodeResult($event)"
+    (permissionResponse)="onHasPermission($event)"
+  ></zxing-scanner>
+  <div class="qr-area">
+    <div class="area"></div>
+  </div>
+</div>
+
+<!-- Displays message on the screen if guest is valid or not -->
+<div class="guest">
+  <ng-container *ngIf="userExist">
+    <div class="alert alert-success">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Success!</strong> User has been found!
+      <p>
+        Username: {{ userDetails[0].name }} box has been check into our collection center.
+      </p>
+    </div>
+  </ng-container>
+  <ng-container #notFound *ngIf="userExist === false">
+    <div class="alert alert-warning">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Warning!</strong> This person is not a User!
+    </div>
+  </ng-container>
+</div>
+  

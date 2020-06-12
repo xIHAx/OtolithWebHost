@@ -1,0 +1,93 @@
+<br>
+<div class="section-title">
+<h2> Order History</h2>
+<br>
+<h5>{{msg}}</h5>
+</div>
+<!-- Order table -->
+<div class="table-responsive" *ngIf = !empty>
+
+      <table class="table table-hover">
+
+        <!-- Table head -->
+        <thead class="thead-dark">
+          <tr>
+            <th class="font-weight-bold">
+              <strong> Order ID #</strong>
+            </th>
+            <th></th>
+            <th class="font-weight-bold">
+              <strong>Product</strong>
+            </th>
+            <th class="font-weight-bold">
+              <strong>Category</strong>
+            </th>
+            <th class="font-weight-bold">
+                <strong>Price</strong>
+            </th>
+            <th class="font-weight-bold">
+              <strong>Quantity</strong>
+            </th>
+            <th class="font-weight-bold">
+              <strong>Amount</strong>
+            </th>
+             <th class="font-weight-bold">
+              <strong>Order Date</strong>
+            </th>
+           
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <!-- /.Table head -->
+
+        <!-- Table body -->
+        <tbody >
+
+          <!-- row -->
+          <tr *ngFor="let order of orders | paginate: { itemsPerPage: 6, currentPage: p }">
+           
+            <th  [routerLink]="['/orderInfo',order._id]">  {{order._id}} </th>
+           
+            <a [routerLink]="['/orderInfo',order._id]">
+            <th scope="row">
+              <img src={{order.image}} alt="" class="img-fluid z-depth-0">
+            </th>
+            </a>
+           
+            <td a [routerLink]="['/orderInfo',order._id]"  style="width:15%">
+            {{order.product_name}}
+            </td>
+            
+            <td style="width:8%">{{order.category}}</td>
+           
+            <td style="width:8%">{{order.price | currency:'USD'}}</td>
+
+            <td style="width:8%">{{order.quantity}}</td>
+
+            <td style="width:8%" class="font-weight-bold">{{order.amount | currency:'USD'}}</td>
+
+            <td style="width:8%">{{order.order_date | date : 'dd/MM/yyyy'}}</td>
+            
+          
+
+          <td><button type="button" class="btn btn-success" (click)="addToCart(order.product_name, order.price, order.category, order.image)" >Re-Order</button></td>
+          <td><button type="button" class="btn btn-success" (click)="deleteOrder(order.order_date)" >Cancel</button></td>
+        </tr>
+          <!-- row -->
+
+         
+
+        </tbody>
+        <!-- /.Table body -->
+
+      </table>
+      <div class="center">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+     </div> 
+    </div>
+    <br>
+    <br>
+    <br>
+    <!-- /.Order table -->
+

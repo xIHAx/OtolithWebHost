@@ -1,0 +1,51 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <div class="container">
+    <h1>Register</h1>
+    <p>Please fill in this form to create an account.</p>
+    <hr>
+      <label for="name">Username:</label>
+      <p><input type="text" formControlName="name" id="name" placeholder="Your Username" required></p>
+
+      <label for="email">Email:</label>
+      <p><input type="email" formControlName="email" id="email" placeholder="Your Email" required></p>
+
+      <label for="mobile">Mobile No.:</label>
+      <p><input type="text" formControlName="mobile" id="mobile" minlength="8" placeholder="Your Mobile No." required></p>
+
+      <label for="address">Postal Code.:</label>
+      <p><input type="text" formControlName="address" id="address" placeholder="Your house postal code" maxlength="6" required></p>
+
+      <label for="address">Type of housing:</label>
+      <div class="form-check">
+        <label class="form-check-label" for="radio1">
+          <input type="radio" formControlName="radioBtn" id="radioHDB" value="HDB" checked>Public Housing (HDB flats)
+        </label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label" for="radio2">
+          <input type="radio" formControlName="radioBtn" id="radioApartments" value="Condominiums">Private Condominiums / Apartments
+        </label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" formControlName="radioBtn" id="radioLandedHousing" value="Landed Housing">Landed Housing
+        </label>
+      </div>
+      <br>
+      <label for="address">Unit Number.:</label>
+      <p><input type="text" formControlName="unitNo" id="unitNo" placeholder="Your house unit number" required></p>
+
+      <label for="password">Password (8 characters minimum):</label>
+      <p><input type="password" formControlName="password" id="password" placeholder="Your password" [(ngModel)]="account.password" minlength="8" required></p>
+
+      <label for="repassword">Retype Password:</label>
+      <p><input type="password" formControlName="repassword" id="repassword" placeholder="Retype password" /></p>
+      <app-password-strength-bar [passwordToCheck]="account.password" [barLabel]="barLabel"> </app-password-strength-bar>  
+    <hr>
+    <p><button class="registerbtn" type="submit" >Register</button></p>
+  </div>
+  
+  <div class="container signin">
+    <p><a routerLink="/login" routerLinkActive="active">Already own an account?</a></p>
+  </div>
+</form>

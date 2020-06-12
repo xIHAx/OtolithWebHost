@@ -1,0 +1,57 @@
+<!-- Header -->
+<header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
+  <img class="w3-image" src="https://scontent.fsin5-1.fna.fbcdn.net/v/t1.0-9/41848456_1649684705330093_192098008655986688_o.jpg?_nc_cat=107&_nc_sid=e3f864&_nc_oc=AQkn5dODZP9l-8bK5wChH1deXxju83i7w3R25O2jw7-_V3dJWs_ByUzoHpWxONObuNa00N_JB0lsFzSutffbZI32&_nc_ht=scontent.fsin5-1.fna&oh=9b0c4b6d5effcc92f4e59b42ca68b5bc&oe=5EF97595" alt="" width="100%" height="30%">
+  <div class="w3-display-middle w3-margin-top w3-center">
+    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>OTOLITH ENRICHMENT PROGRAM & WORKSHOPS</b></span> </h1>
+    <div class="center">
+      <div class="main">
+      <div class="form-group has-search">
+          <input type="text" (keydown)="search($event)" class="form-control" placeholder="Search program/workshops">
+          </div>
+      </div>
+      </div>
+  </div>
+</header>
+    <div ngbDropdown class="d-inline-block">
+      <button class="btn btn-outline-success mr-2" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-filter">  Filter</i></button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button ngbDropdownItem (click)="getNewDate()">Date (new to old)</button>
+        <button ngbDropdownItem (click)="getOldDate()">Date (old to new)</button>
+      </div>
+    </div>
+    <div class="section-title">
+      <h2>Program & Workshops</h2>
+      </div>
+     
+    <p><a routerLink="/addProgrammes" class="postProgramsBtn" *ngIf="service.isStaff()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Add Program/Workshops</a></p>
+      <br>
+    <div class="row">
+    
+      <div class="col-md-6 col-lg-4 mb-5" *ngFor="let program of programs | paginate: { itemsPerPage: 6, currentPage: p } " >
+        <div style="text-align:center">
+          <div class="media-with-text">
+            <div class="card card-block">
+              <div class="img-border-sm mb-4">
+                <a [routerLink]="['/programmesInfo',program._id]" >
+                  <img src={{program.image}} alt="" class="img-fluid"  width="350" height="350">
+                </a>
+            
+        
+              </div>
+        
+              <h2 class="heading mb-0"><a [routerLink]="['/programmesInfo',program._id]">{{program.name}}</a></h2>
+              <p>{{program.price | currency:'USD'}}</p>
+             
+              </div>
+            </div>
+     
+            </div>
+          </div>
+        <div class="center">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+    
+      </div>
+    
+    
+    

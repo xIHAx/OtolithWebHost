@@ -1,0 +1,100 @@
+
+      <br>
+      <div>
+      
+      </div>
+      <div class="section-title">
+          <h2> My Wishlist</h2>
+          <br>
+          <h5>{{msg}}</h5>
+      </div>
+          <!-- Wishlist table -->
+          <div class="table-responsive" *ngIf = !empty >
+          
+            <table class="table table-hover">
+      
+              <!-- Table head -->
+              <thead class="thead-dark">
+                <tr>
+                  <th class="font-weight-bold">
+                    <strong> # </strong>
+                  </th>
+                  <th class="font-weight-bold">
+                    <strong>Image</strong>
+                  </th>
+                  <th class="font-weight-bold">
+                    <strong>Product</strong>
+                  </th>
+                  <th class="font-weight-bold">
+                    <strong>Category</strong>
+                  </th>
+                
+                  <th class="font-weight-bold">
+                    <strong>Price</strong>
+                  </th>
+                  <th class="font-weight-bold">
+                    <strong>Quantity</strong>
+                  </th>
+                  <th></th>
+                  <th class="font-weight-bold">
+                    <strong>Amount</strong>
+                  </th>
+                 
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <!-- /.Table head -->
+      
+              <!-- Table body -->
+              <tbody >
+      
+                <!-- row -->
+                <tr *ngFor="let wishlist of wishlists;let i = index">
+                  <th>  {{i + 1}} </th>
+                  <th scope="row">
+                    <img src={{wishlist.image}} alt="" class="img-fluid z-depth-0">
+                  </th>
+                 
+                  <td style="width:20%">
+                  {{wishlist.name}}
+                  </td>
+                  <td>{{wishlist.category}}</td>
+                 
+                  <td>{{wishlist.price | currency:'USD'}}</td>
+                  <td style="width:10%">
+                  <button type="button" (click)="decreaseQty(wishlist._id,wishlist.quantity)" class="btn btn-success"> - </button>
+                  {{wishlist.quantity}}
+                  <button type="button" (click)="increaseQty(wishlist._id,wishlist.quantity)" class="btn btn-success"> + </button>
+                 </td>
+                 <td></td>
+    
+
+                  <td class="font-weight-bold">
+                  
+                {{wishlist.price * wishlist.quantity | currency:'USD'}}
+                </td>
+                <td> 
+                <p ><a *ngIf="service.isLoggedIn()" (click)="addToCart(wishlist.name, wishlist.price, wishlist.category, wishlist.image, wishlist.quantity)" class="btn btn-success pill px-4 py-2 text-white" ><i class="fa fa-shopping-cart"></i>   ADD TO CART</a></p>
+                </td>
+                  
+                  <td>
+                    <button type="button" class="btn btn-success" (click)="deleteWishlist(wishlist._id)"  name="Remove item">X</button>
+                   
+                  </td>
+                </tr>
+                <!-- row -->
+      
+    
+              </tbody>
+              <!-- /.Table body -->
+      
+            </table>
+      
+          </div>
+          <br>
+          <br>
+          <br>
+          <!-- /Wishlist table -->
+     
+      

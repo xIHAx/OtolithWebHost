@@ -1,0 +1,49 @@
+
+      <div class="col-md-6 mx-auto text-center mb-5 section-heading">
+        <h2 class="mb-5"> {{programInfo[0].title}} </h2>
+        <p>Date Published: {{programInfo[0].publish | date : 'dd/MM/yyyy'}}</p> 
+        <br>
+        <img src={{programInfo[0].image}} alt="" class="img-fluid">
+       <br>
+       <br>
+       <a [routerLink]="['/editProgram',_id]"><img src="./assets/imgs/edit.png" width="40" height="40"></a>			
+       <img  src="./assets/imgs/delete.png" name="imgbtn" width="40" height="40" (click)="deleteProgram()" style="margin-left: 10px;" >
+    </div>
+
+<div class="row">        
+    <div class="col-12">
+            
+        <div class="container">
+        <div class="text py-5">
+              
+          <p>Info: {{programInfo[0].body}}</p>
+
+
+          <div *ngIf="service.isLoggedIn()">
+            <a (click)="addToAttend(programInfo[0]._id)" class="btn btn-primary pill px-4 py-2 text-white">Join this event</a>
+            </div>
+        </div>
+
+      </div>
+      
+      <ng-container *ngIf="userAdmin">
+
+        <br>
+        <div style="text-align:center">
+          <a>List of Residents that sign up:</a>
+          <br>
+           <p *ngIf="programInfo[0].attendees.length === 0">No resident sign up yet</p>
+        </div>
+        <div style="text-align:center" *ngFor="let i of programInfo[0].attendees">
+          <p>Username: {{ i }}</p>
+        </div>
+
+        </ng-container>
+    </div>
+  </div>
+        
+  <div class="container">
+    
+    <disqus class="disqus" [identifier]="['/programInfo',_id]"></disqus>
+  
+  </div>

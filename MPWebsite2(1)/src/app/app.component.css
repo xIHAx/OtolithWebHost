@@ -1,0 +1,26 @@
+#websiteTitle{
+    font-family:fantasy;
+    font-size: 2em;
+    color: rgb(255, 255, 255)!important;
+}
+
+.bg-company-dark-green {
+    background-color: #5A8260 !important;
+}
+
+.nav-link {
+    color: rgb(255, 255, 255)!important;
+}
+
+.nav-link:hover {
+    color: rgb(0, 0, 0)!important;
+  }
+
+#dropdown-menu{
+    background-color: #5A8260 !important;
+}
+
+#bg{
+    background-color: rgb(102, 129, 106) !important;
+    
+}
