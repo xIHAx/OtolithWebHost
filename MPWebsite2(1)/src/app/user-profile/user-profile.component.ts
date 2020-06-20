@@ -83,17 +83,24 @@ export class UserProfileComponent implements OnInit {
     {
       this.toastr.warning('Invalid phone number! Minimum 8 character for phone number', 'Warning');
     }
+
+    else if(/#[\d]{2}-[\d]{3}/.test(this.myForm.value.unitNo) == false)
+    {
+      this.toastr.warning('Invalid unit no format', 'Warning');
+    }
    
     //Update user with input from myForm 
     else{
       
       var userHouseLoc
       this.connectionService.getLocationByPostalCode(this.myForm.value.address).subscribe(location => {
-        userHouseLoc = location["results"][0]["ADDRESS"];
-        console.log(userHouseLoc);
-        
-        if(this.myForm.value.radioBtn == "Landed Housing"){
 
+        if(location["results"][0] == null){
+          this.toastr.warning('Invalid Postal Code', 'Warning');
+        }
+        
+        else if(this.myForm.value.radioBtn == "Landed Housing"){
+          userHouseLoc = location["results"][0]["ADDRESS"];
           this.toastr.success('User has been updated', 'Success');
           this.authService.updateUser( this.myForm.value.name, this.myForm.value.password, this.myForm.value.email, this.myForm.value.mobile, userHouseLoc, "not applicable", this.myForm.value.radioBtn);
           sessionStorage.setItem("address", userHouseLoc);
@@ -104,7 +111,7 @@ export class UserProfileComponent implements OnInit {
           window.location.reload();
         }
         else{
-
+          userHouseLoc = location["results"][0]["ADDRESS"];
           this.toastr.success('User has been updated', 'Success');
           this.authService.updateUser( this.myForm.value.name, this.myForm.value.password, this.myForm.value.email, this.myForm.value.mobile, userHouseLoc, this.myForm.value.unitNo, this.myForm.value.radioBtn);
           sessionStorage.setItem("address", userHouseLoc);
@@ -115,12 +122,13 @@ export class UserProfileComponent implements OnInit {
           window.location.reload();
         }
 
-      },
-      error => {
-        this.toastr.warning('Invalid Postal Code', 'Warning');
-        alert('Invalid Postal Code')
-        console.log("Error: ", error);
-      });
+      }
+      // ,error => {
+      //   this.toastr.warning('Invalid Postal Code', 'Warning');
+      //   alert('Invalid Postal Code')
+      //   console.log("Error: ", error);
+      // }
+      );
 
 
     }

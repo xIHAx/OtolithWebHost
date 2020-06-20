@@ -1,74 +1,69 @@
-
-  <div class="col-12">
-    <div class="site-block-half d-flex" >
-     <div class="image bg-image" ><img src={{programmesInfo[0].image}} height="450" width="700">
-     
-    </div>
-      <div class="text py-5" >
-        <a [routerLink]="['/editProgrammes',_id]" *ngIf="service.isStaff()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><img src="./assets/imgs/edit.png" width="40" height="40"></a>			
-        <img  src="./assets/imgs/delete.png" name="imgbtn" width="40" height="40" (click)="deleteProgrammes()" style="margin-left: 10px;" *ngIf="service.isStaff()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-        <h1  class="font-family-serif h4 mb-3" >{{programmesInfo[0].name}} </h1>
-      
-        
-      
-        <h2 class="font-family-serif h4 mb-3" style="color:green"> {{programmesInfo[0].price | currency:'USD' }}  </h2>
-        <br>
-          <p><strong>Category : {{programmesInfo[0].category}}</strong></p>
-          <p><strong>Date : </strong>{{programmesInfo[0].date}}</p>
-          <p><strong>Time : </strong>{{programmesInfo[0].time}}</p>
-          <p><strong>Capacity : </strong>{{programmesInfo[0].capacity}}</p>
-          <p><strong>Last update : </strong>{{programmesInfo[0].last_update  | date : 'dd/MM/yyyy'}}</p>
-      
-       <br>
-      
-       <div *ngIf="service.isLoggedIn()">
-        <a (click)="addToPrograms(programmesInfo[0]._id)" class="btn btn-primary pill px-4 py-2 text-white">SIGN UP</a>
-        </div>
+<div class="col-12">
+  <div class="site-block-half d-flex" >
+   <div class="image bg-image" ><img src={{programmesInfo[0].image}} height="500" width="750">
+   
+  </div>
+    <div class="text py-5" >
+      <a [routerLink]="['/editProgrammes',_id]" *ngIf="service.isStaff()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><img src="./assets/imgs/edit.png" width="40" height="40"></a>			
+      <img  src="./assets/imgs/delete.png" name="imgbtn" width="40" height="40" (click)="deleteProgrammes()" style="margin-left: 10px;" *ngIf="service.isStaff()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+      <h1  class="font-family-serif h4 mb-3" >{{programmesInfo[0].name}} </h1>
+    
       
     
-        
+      <h2 class="font-family-serif h4 mb-3" style="color:green"> {{programmesInfo[0].price | currency:'USD' }}  </h2>
+      <br>
+        <p><strong>Category : {{programmesInfo[0].category}}</strong></p>
+        <p><strong>Date : </strong>{{programmesInfo[0].date}}</p>
+        <p><strong>Time : </strong>{{programmesInfo[0].time}}</p>
+        <p><strong>Capacity : </strong>{{programmesInfo[0].capacity}}</p>
+        <p><strong>Last update : </strong>{{programmesInfo[0].last_update  | date : 'dd/MM/yyyy'}}</p>
+    
+     <br>
+    
+     <div *ngIf="service.isLoggedIn()">
+      <a (click)="addProgramToCart()" class="btn btn-primary pill px-4 py-2 text-white">SIGN UP</a>
+      </div>
+    
+  
+      
+
+</div>
 
   </div>
-  
-    </div>
-  </div>
-  <div class="row">        
-      <div class="col-12">
-            
-        <div class="container">
-        <div class="text py-5">
-              
-            <p><strong>Information :</strong></p>
-            <p>{{programmesInfo[0].description}}</p>
-           
+</div>
+<div class="row">        
+    <div class="col-12">
           
-            <ng-container *ngIf="userAdmin">
-              <br>
-              <div style="text-align:center">
-                <a><strong>List of Residents that sign up:</strong></a>
-                <br>
-                <p *ngIf="programmesInfo[0].slot.length === 0">No resident sign up yet</p>
-              </div>
-            
-              <div *ngFor="let i of programmesInfo[0].slot">
-              
-              <div  style="text-align:center">
-                <p>Username : {{ i }}</p>
-              </div>
-             
-              </div>
-            </ng-container>
-      </div>
-      </div>
-      </div>
-      </div>
-
       <div class="container">
+      <div class="text py-5">
+            
+          <p><strong>Information :</strong></p>
+          <p>{{programmesInfo[0].description}}</p>
+         
+        
+          <ng-container *ngIf="userAdmin">
+            <br>
+            <div style="text-align:center">
+              <a><strong>List of Residents that sign up:</strong></a>
+              <br>
+              <p *ngIf="programmesInfo[0].slot.length === 0">No resident sign up yet</p>
+            </div>
+          
+            <div *ngFor="let i of programmesInfo[0].slot">
+            
+            <div  style="text-align:center">
+              <p>Username : {{ i }}</p>
+            </div>
+           
+            </div>
+          </ng-container>
+    </div>
+    </div>
+    </div>
+    </div>
 
-        <disqus class="disqus" [identifier]="['/programmesInfo',_id]"></disqus>
+    <div class="disqusContainer">
 
-      </div>
+      <disqus class="disqus" [identifier]="['/programmesInfo',_id]"></disqus>
 
-    
-  
-
+    </div>

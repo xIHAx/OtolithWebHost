@@ -23,6 +23,7 @@ export class UserListComponent implements OnInit {
       }
       this.userList = data;
       this.loadedUserList = data;
+      console.log(this.userList);
       
     });
     
@@ -31,8 +32,8 @@ export class UserListComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  returnB(_id) {
-    this.authService.updateCollectionStatus(_id, false);
+  returnB(_id, greenCurrency) {
+    this.authService.updateCollectionStatusReturn(_id, false, greenCurrency);
     location.reload();
   }
 

@@ -21,7 +21,7 @@ export class ProductsComponent implements OnInit {
   quantity:number;
   carts: any = [];
   loadedproductList: any[];  
-
+  productID:string;
   constructor(private postsService: PostsService, private route: ActivatedRoute, private router:Router,private toastr: ToastrService, public service: AuthService) {
    
  
@@ -139,7 +139,7 @@ export class ProductsComponent implements OnInit {
 
  
 
-  addToCart(pName, pPrice, pCat, pImg) {
+  addToCart(pID, pName, pPrice, pCat, pImg) {
     if(this.inArray(pName, this.carts)){
       this.toastr.warning('This product is already in your cart', 'Warning');
     }
@@ -147,13 +147,14 @@ export class ProductsComponent implements OnInit {
       if(confirm('Do you want to add item ?'))
       {
         console.log(pName, pPrice, pCat, pImg);
+        this.productID = pID;
         this.name = pName;
         this.price = pPrice;
         this.category = pCat;
         this.image= pImg;
         this.quantity=1;
         
-        this.postsService.addToCart(sessionStorage.getItem("userID"),this.name,this.price,this.category,this.image,this.quantity) .subscribe(results =>{
+        this.postsService.addToCart(sessionStorage.getItem("userID"),this.productID,this.name,this.price,this.category,this.image,this.quantity) .subscribe(results =>{
           this.toastr.success("Successfully added item to cart!", 'Success!');
          
           })

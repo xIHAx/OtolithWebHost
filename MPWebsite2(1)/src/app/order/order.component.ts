@@ -55,26 +55,6 @@ export class OrderComponent implements OnInit {
     return false; 
   }
 
-  addToCart(pName, pPrice, pCat, pImg) {
-    if(this.inArray(pName, this.carts)){
-      this.toastr.warning('This product is already in your cart', 'Warning');
-    }
-    else{
-      if(confirm('Do you want to add item to cart ?')){
-        console.log(pName, pPrice, pCat, pImg);
-        this.productName = pName;
-        this.price = pPrice;
-        this.category = pCat;
-        this.image= pImg;
-        this.quantity=1;
-        
-        this.postsService.addToCart(sessionStorage.getItem("userID"),this.productName,this.price,this.category,this.image,this.quantity) .subscribe(results =>{
-          this.toastr.success("Successfully added item to cart!", 'Success!');
-          })
-        location.reload();
-      }
-    }
-  }
 
 
   deleteOrder(orderDate:Date)

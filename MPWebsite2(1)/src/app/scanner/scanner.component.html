@@ -13,7 +13,7 @@
 
 <!-- Displays message on the screen if guest is valid or not -->
 <div class="guest">
-  <ng-container *ngIf="userExist">
+  <ng-container *ngIf="userExist === true">
     <div class="alert alert-success">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       <strong>Success!</strong> User has been found!
@@ -26,6 +26,12 @@
     <div class="alert alert-warning">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       <strong>Warning!</strong> This person is not a User!
+    </div>
+  </ng-container>
+  <ng-container #notFound *ngIf="userExist === 1">
+    <div class="alert alert-warning">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Warning!</strong> This person box has already been collected
     </div>
   </ng-container>
 </div>

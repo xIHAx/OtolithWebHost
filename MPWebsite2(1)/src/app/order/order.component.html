@@ -71,7 +71,7 @@
             
           
 
-          <td><button type="button" class="btn btn-success" (click)="addToCart(order.product_name, order.price, order.category, order.image)" >Re-Order</button></td>
+          <td><button type="button" class="btn btn-success" [routerLink]="['/orderInfo',order._id]" >View Details</button></td>
           <td><button type="button" class="btn btn-success" (click)="deleteOrder(order.order_date)" >Cancel</button></td>
         </tr>
           <!-- row -->

@@ -37,7 +37,7 @@
           <td data-label="time" [routerLink]="['/programmesInfo',i._id]">{{ i.time }}</td>
             <td data-label="attendees">
                 <select name="attendees" id={{i._id+1}} class="browser-default custom-select custom-select-lg mb-3">
-                    <option *ngFor="let obj of i.slot">{{obj}}</option>
+                  <option *ngFor="let obj of i.slot">{{obj}}</option>
                 </select>
                 <div>
                     <input type="text" class="form-control" id={{i._id}} name="username">

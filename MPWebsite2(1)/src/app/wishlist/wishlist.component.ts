@@ -22,6 +22,7 @@ export class WishlistComponent implements OnInit {
   total : number;
   msg:string;
   empty: boolean;
+  ID:string;
   constructor(private postsService: PostsService, private route: ActivatedRoute, private router:Router,private toastr: ToastrService,public service: AuthService) { 
     this.quantity = 0;
     if(service.isLoggedIn()){
@@ -102,20 +103,21 @@ export class WishlistComponent implements OnInit {
   
 
 
-  addToCart(pName, pPrice, pCat, pImg, pQty) {
+  addToCart(pID,pName, pPrice, pCat, pImg, pQty) {
     if(this.inArray(pName, this.carts)){
       this.toastr.warning('Product is already in your cart', 'Warning');
     }
     else{
       if(confirm('Do you want to add item ?'))
       {
-        console.log(pName, pPrice, pCat, pImg);
+        console.log(pID,pName, pPrice, pCat, pImg);
+        this.ID = pID;
         this.name = pName;
         this.price = pPrice;
         this.category = pCat;
         this.image= pImg;
         this.quantity= pQty;
-        this.postsService.addToCart(sessionStorage.getItem("userID"),this.name,this.price,this.category,this.image,this.quantity) .subscribe(results =>{
+        this.postsService.addToCart(sessionStorage.getItem("userID"), this.ID,this.name,this.price,this.category,this.image,this.quantity) .subscribe(results =>{
           this.toastr.success("Successfully added item to cart!", 'Success!');
          
           })

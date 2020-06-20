@@ -17,7 +17,7 @@ export class ProgrammesInfoComponent implements OnInit {
   private sub: any;
   product:any = [];
   name:string;
-  price : number;
+  price : any;
   category: string;
   image:string;
   quantity:number;
@@ -27,12 +27,23 @@ export class ProgrammesInfoComponent implements OnInit {
   residentNo: number = 0;
   msg:any;
   empty:boolean;
-
+  carts: any = [];
+  programID:string;
   
   constructor(private postsService: PostsService,private route: ActivatedRoute, private toastr: ToastrService, private router: Router, public service: AuthService) 
   {  
- this.residentNo = 0;
- this.msg = 'No resident sign up yet'
+    this.residentNo = 0;
+    this.msg = 'No resident sign up yet'
+    if(service.isLoggedIn()){
+      this.postsService.getCart(sessionStorage.getItem("userID")).subscribe(carts => {
+        console.log(carts);
+        this.carts = carts;
+      },
+        error => {
+          console.log("Cart View Error: ", error);
+        });
+      }
+  
   }  
 
 
@@ -57,33 +68,60 @@ export class ProgrammesInfoComponent implements OnInit {
   }
 
 
-  addToPrograms(programID):void{
+ 
 
-    this.userName = sessionStorage.getItem("LoggedIn");
 
-    if(confirm('Do you want to join this program?'))
+  inArray(target, array)
+  {
+    for(var i = 0; i < array.length; i++) 
     {
-      console.log("wabalaba dub dub");
+      if(array[i].name == target)
+      {
+        return true;
+      }
+    }
+    return false; 
+  }
+
+  addProgramToCart() {
+    if(this.inArray(this.programmesInfo[0].name, this.carts)){
+      this.toastr.warning('This program or workshop is already in your cart', 'Warning');
+    }
+    else{
+      if(confirm('If you want to join this program or workshop, you are require to make your payment. Are you sure you want make payment now?'))
+    {
+      
       for (var i = 0; i < this.programmesInfo[0].slot.length; i++){
         console.log(this.programmesInfo[0].slot[i]);
-
+        this.userName = sessionStorage.getItem("LoggedIn");
         if(this.programmesInfo[0].slot[i] == this.userName){
-          this.toastr.warning('You\'ve already joined this program', 'Warning');
+          this.toastr.warning('You\'ve already joined this program or workshop', 'Warning');
           return;
         }
       }
       if(this.programmesInfo[0].slot.length >= this.programmesInfo[0].capacity){
-        this.toastr.success("Sorry the program is already at max capacity", 'Success!');
+        this.toastr.success("Sorry the program or workshop is already at max capacity", 'Success!');
       }
       else{
-        this.postsService.addToPrograms(programID, this.userName) .subscribe(results =>{
-          this.toastr.success("Successfully Joined program", 'Success!');
+      this.programID = this.programmesInfo[0]._id;
+      this.name=this.programmesInfo[0].name;
+      this.price=this.programmesInfo[0].price;
+      this.category=this.programmesInfo[0].category;
+      this.image=this.programmesInfo[0].image;
+      this.quantity = 1;
+     
+    
+      this.postsService.addToCart(sessionStorage.getItem("userID"),this.programID,this.name,this.price,this.category,this.image,this.quantity).subscribe(results =>{
+        this.toastr.success("Successfully added item to cart!", 'Success!');
+       
         })
-        
         location.reload();
       }
-      
+     
     }
+    }
+
+    
   }
 
   checkUser(): void {

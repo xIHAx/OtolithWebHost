@@ -28,15 +28,22 @@ export class AddOrderComponent implements OnInit {
   submitted : boolean;
   formProcess:boolean;
   message: any;
-
+  itemID:string;
+  programID:string;
   constructor(private postsService: PostsService,private fb: FormBuilder,private toastr: ToastrService, private router: Router,private authService: AuthService,private connectionService: ConnectionService) {
     const navigation = this.router.getCurrentNavigation();
-    const state = navigation.extras.state as {total: string};
+    const state = navigation.extras.state as {total: string, ID:any};
     this.totalAmount = state.total;
+    this.programID = state.ID;
     console.log(this.totalAmount);
+    console.log(this.programID);
+    console.log(this.programID[0]);
+    
     this.postsService.getCart(sessionStorage.getItem("userID")).subscribe(carts => {
       this.carts = carts; 
     });
+
+    
    }
 
   ngOnInit() {
@@ -57,11 +64,28 @@ export class AddOrderComponent implements OnInit {
 
   clearCart()
   {
+    
     this.postsService.clearCart(sessionStorage.getItem("userID")).subscribe(results => {
       this.router.navigateByUrl('/order');
       });
+
+   
     
   }
+
+
+   addToPrograms(){
+   for(var i=0; i<this.programID.length; i++)
+   {
+    var userName = sessionStorage.getItem("LoggedIn");
+    
+     this.postsService.addToPrograms(this.programID[i], userName).subscribe(results =>{
+     });   
+    
+   }
+  }
+
+
   
   onSubmit(){
     var productArray: any = [];
@@ -86,8 +110,10 @@ export class AddOrderComponent implements OnInit {
      else if(confirm('Are you sure you want to order now ?'))
       {
       this.StripePayment()
+      this.addToPrograms();
       for(var i = 0; i < this.carts.length; i++)
       {
+        this.itemID = this.carts[i].itemID;
         this.product_name = this.carts[i].name;
         productArray.push(this.carts[i].name);
         this.price = this.carts[i].price;
@@ -95,7 +121,7 @@ export class AddOrderComponent implements OnInit {
         this.image = this.carts[i].image;
         this.quantity = this.carts[i].quantity;
         this.amount = this.carts[i].price * this.carts[i].quantity;
-        this.postsService.addOrder(sessionStorage.getItem("userID"),this.product_name,this.price,this.category,this.image,this.quantity,this.amount,this.addOrderForm.value.fullname,this.addOrderForm.value.email,this.addOrderForm.value.phone,this.addOrderForm.value.address,this.order_date,this.addOrderForm.value.card_type,this.addOrderForm.value.card_no,this.addOrderForm.value.expiration,this.addOrderForm.value.cvc).subscribe(results => {
+        this.postsService.addOrder(sessionStorage.getItem("userID"),this.itemID,this.product_name,this.price,this.category,this.image,this.quantity,this.amount,this.addOrderForm.value.fullname,this.addOrderForm.value.email,this.addOrderForm.value.phone,this.addOrderForm.value.address,this.order_date,this.addOrderForm.value.card_type,this.addOrderForm.value.card_no,this.addOrderForm.value.expiration,this.addOrderForm.value.cvc).subscribe(results => {
         this.clearCart();
         this.toastr.success("Successfully ordered!", 'Success!');
         });
@@ -135,5 +161,6 @@ export class AddOrderComponent implements OnInit {
       console.log('Error', error);
     });
   }
+
 
 }

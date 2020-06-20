@@ -14,20 +14,67 @@ export class UserInfoComponent implements OnInit {
   elementType: "url" | "canvas" | "img" = "url";
   userInfo: any = [];
   private sub: any;
-  programs: any = [];
-  msg : string;
+  programsArray: any = [];
+  projectsArray: any = [];
+  programEmpty:boolean;
+  projectEmpty:boolean;
+  msg:string;
+  msg2:string;
+ 
   constructor(public postsService: PostsService,private route: ActivatedRoute, private toastr: ToastrService, private router: Router, public authService: AuthService) {
-  
-        this.postsService.getAllProgrammes().subscribe(programs => {
-        this.programs = programs;
-     
+     this.postsService.getAllProgrammes().subscribe(programs => {
+      for(var i = 0; i < programs.length; i++)
+      {
+
+        for(var j = 0; j < programs[i].slot.length; j++)
+        {
+
+          if(programs[i].slot[j] == this.userInfo[0].name)
+          {
+            this.programsArray.push(programs[i]);
+            this.msg = ""
+            this.programEmpty = false
+          }
+          else
+          {
+            this.msg = this.userInfo[0].name + " haven't sign up for any program or workshop"
+            this.programEmpty = true
+          }
+        }
+      }
+      console.log(this.programsArray);
+          
       });
       
+      this.postsService.getAllPrograms().subscribe(projects => {
+        for(var i = 0; i < projects.length; i++)
+        {
+  
+          for(var j = 0; j < projects[i].attendees.length; j++)
+          {
+  
+            if(projects[i].attendees[j] == this.userInfo[0].name)
+            {
+              this.projectsArray.push(projects[i]);
+              this.msg2 = ""
+              this.projectEmpty = false
+            }
+            else
+            {
+              this.msg2 = this.userInfo[0].name + " haven't sign up for any project"
+              this.projectEmpty = true
+            }
+          }
+        }
+        console.log(this.projectsArray);
+        
+      });
+  
   }
  
 
-  returnB(_id) {
-    this.authService.updateCollectionStatus(_id, false);
+  returnB(_id, greenCurrency) {
+    this.authService.updateCollectionStatusReturn(_id, false, greenCurrency);
     location.reload();
   }
  

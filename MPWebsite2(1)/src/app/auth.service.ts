@@ -23,6 +23,17 @@ export class AuthService {
     return this.http.post<any[]>('./api/verifyUser/', {'username': username, 
     'password':  pw, 'token': token });   
   }
+
+  verifyAccount( username: string, password: string) {
+    return this.http.put<any[]>('./api/verifyAccount/' + username, {"username": username, "password": password}
+    ).subscribe(
+    data  => {
+      console.log("PUT Request is successful ", data);  
+    },
+    error  => { 
+      console.log("Error", error);
+    });
+  }
   
   getAllResident() {
     return this.http.get<any[]>('./api/getAllResident');
@@ -64,8 +75,12 @@ export class AuthService {
   }
 
   isStaff() {   
-    return (this.getUserRole() == "staff");   
-  }      
+    return (this.getUserRole() == "staff" || this.getUserRole() == "admin");   
+  }
+  
+  isAdmin() {
+    return (this.getUserRole() == "admin"); 
+  }
   
   isUser() {    
     return (this.getUserRole() == "user" || this.getUserRole() == "staff");   
@@ -82,8 +97,6 @@ export class AuthService {
       console.log("Error", error);
     });
   }
-
- 
 
   resetPasswordByName( username: string, password: string) {
     return this.http.put<any[]>('./api/resetPasswordByName/' + username, {"username": username, "password": password}
@@ -107,9 +120,43 @@ export class AuthService {
     });
   }
 
-  updateCollectionStatus( _id: string, boolean: boolean) {
+  updateCollectionStatusRecieve( _id: string, boolean: boolean, greenCurrency: number) {
     console.log(_id);
-    return this.http.put<any[]>('./api/box/' + _id, { "boolean": boolean }
+    return this.http.put<any[]>('./api/box/' + _id, { "boolean": boolean, "greenCurrency":greenCurrency }
+    ).subscribe(
+    data  => {
+      console.log("PUT Request is successful ", data);  
+    },
+    error  => { 
+      console.log("Error", error);
+    });
+  }
+
+  updateCollectionStatusReturn( _id: string, boolean: boolean, greenCurrency: number) {
+    console.log(_id);
+    return this.http.put<any[]>('./api/box/' + _id, { "boolean": boolean, "greenCurrency":greenCurrency }
+    ).subscribe(
+    data  => {
+      console.log("PUT Request is successful ", data);  
+    },
+    error  => { 
+      console.log("Error", error);
+    });
+  }
+
+  useGC( _id: string, greenCurrency: number) {
+    return this.http.put<any[]>('./api/useGC/' + _id, { "greenCurrency":greenCurrency }
+    ).subscribe(
+    data  => {
+      console.log("PUT Request is successful ", data);  
+    },
+    error  => { 
+      console.log("Error", error);
+    });
+  }
+
+  changeUserRole( _id: string, role: string) {
+    return this.http.put<any[]>('./api/changeUserRole/' + _id, { "role":role }
     ).subscribe(
     data  => {
       console.log("PUT Request is successful ", data);  
@@ -121,7 +168,11 @@ export class AuthService {
 
   getUserDetails(_id) {
     return this.http.get<any[]>('./api/getUser/' +_id);
-  }   
+  }
+  
+  deleteUser(_id){
+    return this.http.delete<any[]>('./api/deleteUser/' + _id);
+  }
 
 }
 

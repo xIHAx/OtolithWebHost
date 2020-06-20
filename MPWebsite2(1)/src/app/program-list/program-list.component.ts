@@ -53,7 +53,7 @@ export class ProgramListComponent implements OnInit {
     console.log(_id);
     console.log(value);
     if(confirm('Do you want to add this user into the program/workshop?')){
-      this.postsService.addToPrograms(_id, value) .subscribe(results =>{
+      this.postsService.addToPrograms(_id, value).subscribe(results =>{
         this.toastr.success("Successfully added " + value + " to the program/workshop!" , 'Success!');
       })
       location.reload();

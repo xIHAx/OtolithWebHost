@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostsService } from '../posts.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, NavigationExtras } from '@angular/router'; 
+import { AuthService } from '../auth.service'; 
 
 
 @Component({
@@ -18,47 +19,91 @@ export class CartComponent implements OnInit {
   total : number;
   msg:string;
   empty: boolean;
-  constructor(private router: Router,private postsService: PostsService,private toastr: ToastrService) {
-   this.quantity = 0;
-  
-      this.postsService.getCart(sessionStorage.getItem("userID")).subscribe(carts => {
-        console.log(carts);
+  ID:any = [];
+  programIDList:any = [];
+  programIDArray:any = [];
+  userInfo: any = [];
+  userGCA: number;
+  clicked: boolean;
+
+  constructor(private router: Router,private postsService: PostsService,private toastr: ToastrService, private authService: AuthService) {
+  this.quantity = 0;
+  this.clicked = false; 
+    this.postsService.getCart(sessionStorage.getItem("userID")).subscribe(carts => {
+      this.carts = carts;
+      this.totalAmount();
         
-        this.carts = carts;
-        this.totalAmount();
-          
-        if(this.carts.length == 0){
-          this.msg = 'Your cart is empty!'
-          this.empty = true
-         }
-        else{
-          this.msg = ''
-          this.empty = false
-         }
-        
-      },
-      error => {
-        console.log("Cart View Error: ", error);
+      if(this.carts.length == 0){
+        this.msg = 'Your cart is empty!'
+        this.empty = true
       }
-      );
+      else{
+        this.msg = ''
+        this.empty = false
+      }    
+    }, 
+    error => {
+      console.log("Cart View Error: ", error);
+    });
+
+    this.authService.getUserDetails(sessionStorage.getItem("userID")).subscribe(userInfo => {
+      this.userInfo = userInfo;
+      this.userGCA = userInfo[0].greenCurrency
+    });
      
-    
-   }
+  }
 
   ngOnInit(): void {
     
   }
 
+  useGC(){
+    if(confirm('Do you want to deduct the total cost with your green currency?'))
+    {
+      this.total = this.totalAmount() - this.userInfo[0].greenCurrency;
+      this.userGCA = 0;
+      this.clicked = true;   
+    }
+    
+  }
+
+  undo(){
+    location.reload();
+  }
+
   passValue(){
+    var afterGCDeduction: number;
+
     if(this.totalAmount() < 6){
       alert('You have to spend a minimum of $6 before you can check out.')
     }
     else{
-      const navigationExtras: NavigationExtras = {state: {total: this.totalAmount()}};
-      this.router.navigate(['addOrder'], navigationExtras);
+      if(this.clicked == true){
+        this.authService.useGC(sessionStorage.getItem("userID"), 0);
+        for(var i = 0; i < this.carts.length; i++)
+        {
+          this.programIDList = this.carts[i].itemID;
+          this.programIDArray.push(this.programIDList);
+        }
+        afterGCDeduction = this.total - this.userInfo[0].greenCurrency
+        const navigationExtras: NavigationExtras = {state: {total: afterGCDeduction, ID: this.programIDArray}};
+        this.router.navigate(['addOrder'], navigationExtras);
+      }
+      else{
+        for(var i = 0; i < this.carts.length; i++)
+        {
+          this.programIDList = this.carts[i].itemID;
+          this.programIDArray.push(this.programIDList);
+        }
+        console.log(this.total);
+        const navigationExtras: NavigationExtras = {state: {total: this.total, ID: this.programIDArray}};
+        this.router.navigate(['addOrder'], navigationExtras);
+    
+      }
     }
-  
   }
+
+ 
 
 
   totalAmount(){
@@ -71,7 +116,7 @@ export class CartComponent implements OnInit {
 
   deleteCart(id:string)
   {
-    if(confirm('Do you want to remove item ?'))
+    if(confirm('Do you want to remove this item?'))
   {
  
     this.postsService.deleteCart(id).subscribe(results => {

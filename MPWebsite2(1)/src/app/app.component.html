@@ -1,11 +1,11 @@
 <nav class="navbar navbar-expand-md bg-company-dark-green navbar-light">
   <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
     <ul class="navbar-nav mr-auto">
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a class="navbar-brand" href="#">
         <img src="/assets/imgs/navbarLogo.png" alt="logo" style="width:60px;">
       </a>
-    </li>
+    </li> -->
     <li class="nav-item">
       <a class="nav-link" routerLink="/home"><i class='fa fa-home'> Home</i></a>
     </li>
@@ -44,7 +44,7 @@
         <a class="nav-link" routerLink="/programList" *ngIf="service.isStaff()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Program & Workshops List</a>
         <a class="nav-link" routerLink="/staffProjectList" *ngIf="service.isStaff()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Project List</a>
         <a class="nav-link" routerLink="/statisticPage" *ngIf="service.isStaff()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Website Statistics</a>
-
+        <a class="nav-link" routerLink="/admin" *ngIf="service.isAdmin()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Admin Page</a>
       </div>
     </li>
 

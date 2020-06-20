@@ -24,7 +24,7 @@ export class ProductsInfoComponent implements OnInit {
   image:string;
   quantity:number;
   wishlists: any = [];
- 
+  productID:string;
   
   constructor(private postsService: PostsService,private route: ActivatedRoute, private toastr: ToastrService, private router: Router, public service: AuthService) 
   { 
@@ -89,12 +89,13 @@ export class ProductsInfoComponent implements OnInit {
     else{
       if(confirm('Do you want to add item ?'))
     {
+      this.productID = this.productsInfo[0]._id;
       this.name=this.productsInfo[0].name;
       this.price=this.productsInfo[0].price;
       this.category=this.productsInfo[0].category;
       this.image=this.productsInfo[0].image;
       this.quantity = 1;
-      this.postsService.addToCart(sessionStorage.getItem("userID"),this.name,this.price,this.category,this.image,this.quantity).subscribe(results =>{
+      this.postsService.addToCart(sessionStorage.getItem("userID"),this.productID,this.name,this.price,this.category,this.image,this.quantity).subscribe(results =>{
         this.toastr.success("Successfully added item to cart!", 'Success!');
        
         })

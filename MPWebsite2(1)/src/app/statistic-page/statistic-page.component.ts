@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Chart } from 'node_modules/chart.js'
 import { PostsService } from '../posts.service';
 
-
 @Component({
   selector: 'app-statistic-page',
   templateUrl: './statistic-page.component.html',
@@ -47,6 +46,7 @@ export class StatisticPageComponent implements OnInit {
   
   ngOnInit(): void {
     this.postsService.getAllOrders().subscribe(orders => {
+      console.log(orders);
       var productCatergory: any =[]
       for (var i = 0; i < orders.length; i++){
         this.ordersProductName.push(orders[i].product_name);
@@ -140,16 +140,16 @@ export class StatisticPageComponent implements OnInit {
     });
 
     this.postsService.getAllPrograms().subscribe(projects => {
+      console.log(projects);
       var test: any = []
       for (var i = 0; i < projects.length; i++){
         test.push([projects[i].title, projects[i].attendees.length]);
       }
-      var entriestest = Object.entries(test);
-      var test1 = this.findLargest5(entriestest);
+      var test1 = this.findLargest5(test);
 
       for (var i = 0; i < test1.length; i++){
-        this.projectName.push(test1[i][1][0]);
-        this.projectParticipantCount.push(test1[i][1][1]);
+        this.projectName.push(test1[i][0]);
+        this.projectParticipantCount.push(test1[i][1]);
       }
 
       //Start of top 5 popular project
@@ -196,12 +196,12 @@ export class StatisticPageComponent implements OnInit {
       for (var i = 0; i < programs.length; i++){
         test.push([programs[i].name, programs[i].slot.length]);
       }
-      var entriestest = Object.entries(test);
-      var test1 = this.findLargest5(entriestest);
+
+      var test1 = this.findLargest5(test);
 
       for (var i = 0; i < test1.length; i++){
-        this.programName.push(test1[i][1][0]);
-        this.programParticipantCount.push(test1[i][1][1]);
+        this.programName.push(test1[i][0]);
+        this.programParticipantCount.push(test1[i][1]);
       }
 
       //Start of top 5 popular Program

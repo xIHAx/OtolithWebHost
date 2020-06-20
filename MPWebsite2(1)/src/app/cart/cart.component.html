@@ -74,34 +74,48 @@
                 </td>
                   
                   <td>
-                    <button type="button" class="btn btn-success" (click)="deleteCart(cart._id)"  name="Remove item">X</button>
+                    <button type="button" class="btn btn-danger" (click)="deleteCart(cart._id)"  name="Remove item">X</button>
                    
                   </td>
                 </tr>
                 <!-- row -->
-      
-               
-                
+
                <!-- Last row -->
           <tr>
                 <td></td>
                 <td>
-                    <button type="button" class="btn btn-primary" (click)="clearCart()" >CLEAR ALL
+                    <button type="button" class="btn btn-warning" (click)="clearCart()" >CLEAR ALL
                       </button>
                 </td>
              
                 <td>
                   <h4>
-                    <strong>Total : {{total | currency:'USD'}}</strong>
+                    <strong>Total Amount : {{total | currency:'SGD'}}</strong>
                   </h4>
                 </td>
+
+                <td>
+                  <h4>
+                    <strong>My Green Currency : {{ userGCA}}</strong>
+                  </h4>
+                </td>
+
+                <td>
+                  <button type="button" (click)="useGC()" class="btn btn-success" >Use Green Currency
+                    </button>
+                </td>
+
+                <td>
+                  <button type="button" (click)="undo()" class="btn btn-warning" >Undo
+                  </button>
+                </td>
                
-                <td colspan="5" class="text-right">
-                    <button type="button" (click)="passValue()" class="btn btn-primary" >ORDER NOW
+                <td class="text-right">
+                    <button type="button" (click)="passValue()" class="btn btn-success" >ORDER NOW
                     </button>
                 </td>
                 <td class="text-right">
-                  <button type="button" class="btn btn-primary" [routerLink]="['/products','All']" >GO BACK SHOPPING</button>
+                  <button type="button" class="btn btn-success" [routerLink]="['/products','All']">CONTINUE SHOPPING</button>
                 </td>
               </tr>
               <!-- Last row -->

@@ -223,6 +223,9 @@ router.route('/reguser').post(function(req, res)
     };
     
     token();
+
+   
+
     var username = req.body.username;     
     var password = req.body.password;  
     var role = req.body.role;
@@ -242,10 +245,9 @@ router.route('/reguser').post(function(req, res)
         'Hi ' + username + ',' + '<br><p>Please confrim your whether the details provided are correct</p>' +
         '<p>Mobile Number: ' + mobile + '</p>' +
         '<p>Address: ' + address + ' Unit Number: '+ unitNo +' Type of housing: '+ housingType +'</p>' +
-        '<p>Please enter this token: ' + temporaryToken +
-        ' into the form after clicking on the "Verify Me" button bellow. <br>'+
+        '<p>Please click on the "Verify Me" link bellow to verify your account. <br>'+
         'If you did not sign up with Otolith, please ignore this email or contact us at otolithmp@gmail.com</p><br>' + 
-        '<a href="http://localhost:3000/accountValidation">Verify Me</a>',
+        '<a href="http://localhost:3000/accountValidation/' + temporaryToken + '">Verify Me</a>',
         replyTo: email
     };
 
@@ -261,7 +263,7 @@ router.route('/reguser').post(function(req, res)
 
     bcrypt.hash(password, BCRYPT_SALT_ROUNDS, function(err, hash) 
     {    
-        db.collection('users').insertOne({"name" : username, "password" : hash, "role" : role, "email" : email, "mobile": mobile, "address": address, "unitNo": unitNo, "housingType": housingType,"greenCurrency": 0, "collected": false, "verified": false, 'temporaryToken':temporaryToken},
+        db.collection('users').insertOne({"name" : username, "password" : hash, "role" : role, "email" : email, "mobile": mobile, "address": address, "unitNo": unitNo, "housingType": housingType,"greenCurrency": 0, "collected": false, "verified": false, "temporaryToken":temporaryToken, "passwordToken":null},
         (err, result) => {   
         if (err) return console.log(err)   
         console.log('user registered')   
@@ -271,47 +273,6 @@ router.route('/reguser').post(function(req, res)
     
 }); 
 })
-
-//Verify user
-router.route('/verifyUser').post(function(req, res2) 
-{  
-    var username = req.body.username;     
-    var password = req.body.password;
-    var token = req.body.token
-    
-    db.collection('users').findOne({"name": username}, { password: 1, role: 1, _id: 1, email:1, mobile:1, address:1 }, function(err, result) 
-    {   
-        if (result == null) 
-        res2.send([{"auth": false}]);
-        else {   
-        bcrypt.compare(password, result.password, function(err, res) 
-        {
-
-            if(err || res == false) 
-            {       
-                res2.send([{"auth": false}]);    
-            }
-            else if(result.temporaryToken != token){
-                res2.send([{"auth": false}]);    
-            }
-            else 
-            {      
-                res2.send([{"auth": true, "role": result.role, "userID":result._id, "mobile":result.mobile, "email":result.email, "address":result.address}]);   
-                db.collection('users').updateMany( {"name": username}, {$set:{ "verified": true}}, (err, result) => {
-                    if (err){
-                        return console.log(err);
-                    } 
-                    else{
-                        console.log('User updated');
-                    }
-                        
-                });
-            }    
-        });
-    }   
-    }); 
-});
-
 
 // reset password
 router.route('/resetPassword').post(function(req, res) 
@@ -412,6 +373,28 @@ router.route('/resetPasswordByName/:name').put(function(req, res)
     }); 
 }) 
 
+//Verify Account
+router.route('/verifyAccount/:name').put(function(req, res) 
+{   
+  
+    var username = req.body.username; 
+    var password = req.body.password;  
+
+    bcrypt.hash(password, BCRYPT_SALT_ROUNDS, function(err, hash)
+    {
+        db.collection('users').updateMany( {"name": username}, {$set:{ "password": hash, "verified":true}}, (err, result) => {
+            if (err){
+                return console.log(err);
+            } 
+            else{
+                console.log('Account verified');
+                res.send(result)
+            }
+            
+       });
+    }); 
+}) 
+
 // get all Resident
 router.route('/getAllResident').get(function(req, res) {
     db.collection('users').find({"role": "user"} , { _id: 1, name: 1, password:1, email:1, mobile:1, role:1, address:1, greenCurrency:1, collected:1, verified:1 }).sort({'_id':-1}).toArray( (err, results) =>
@@ -433,9 +416,38 @@ router.route('/getUser/:_id').get(function(req, res) {
 // Scan UserQRCode to credit green currency
 router.route('/box/:_id').put(function (req, res) {
     var boolean = req.body.boolean
-    db.collection('users').updateOne({"_id" : ObjectId(req.params._id) }, {$set: { "collected": boolean}}, (err, results) => {
+    var greenCurrency = req.body.greenCurrency
+    db.collection('users').updateOne({"_id" : ObjectId(req.params._id) }, {$set: { "collected": boolean, "greenCurrency": greenCurrency } }, (err, results) => {
     if (err) return console.log(err);
     console.log('saved to database');
+    res.send(results);
+    });
+});
+
+// Scan UserQRCode to credit green currency
+router.route('/useGC/:_id').put(function (req, res) {
+    var greenCurrency = req.body.greenCurrency
+    db.collection('users').updateOne({"_id" : ObjectId(req.params._id) }, {$set: { "greenCurrency": greenCurrency } }, (err, results) => {
+    if (err) return console.log(err);
+    console.log('saved to database');
+    res.send(results);
+    });
+});
+
+// Change existing user role
+router.route('/changeUserRole/:_id').put(function (req, res) {
+    var role = req.body.role
+    db.collection('users').updateOne({"_id" : ObjectId(req.params._id) }, {$set: { "role": role } }, (err, results) => {
+    if (err) return console.log(err);
+    console.log('saved to database');
+    res.send(results);
+    });
+});
+
+// delete user based on id
+router.route('/deleteUser/:_id').delete(function(req, res) {
+    db.collection('users').deleteOne( {"_id": ObjectId(req.params._id)}, (err,
+    results) => {
     res.send(results);
     });
 });
