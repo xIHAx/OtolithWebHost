@@ -29,7 +29,7 @@
                <p><strong>Address : </strong>{{userInfo[0].address}}</p> 
                <p><strong>Green Currency : </strong>{{userInfo[0].greenCurrency}}</p> 
                <p><strong>Box collection : </strong>{{userInfo[0].collected}}
-               <button type="button" class="btn btn-warning" (click)="returnB(userInfo[0]._id, userInfo[0].greenCurrency)">Return Box</button>
+               <button type="button" class="btn btn-warning" (click)="returnB(userInfo[0]._id,userInfo[0].greenCurrency)">Return Box</button>
                </p> 
               
           <br>
@@ -45,10 +45,10 @@
                     <tr>
                       <th scope="col">Image</th>
                       <th scope="col">Program Name</th>
-                      <th scope="col">Price</th>
-                      <th scope="col">Category</th>
-                      <th scope="col">Date</th>
-                      <th scope="col">Time</th>
+                      <th scope="col" style="width:10%">Price</th>
+                      <th scope="col" style="width:10%">Category</th>
+                      <th scope="col" style="width:10%">Date</th>
+                      <th scope="col" style="width:10%">Time</th>
                     </tr>
                   </thead>
 
@@ -62,11 +62,11 @@
                           <img  src={{program.image}} name="Image" width="200" height="145">
                         </td>
                       </a>
-                    <td data-label="name" [routerLink]="['/programmesInfo',program._id]" style="width:15%">{{ program.name}}</td>
-                    <td data-label="price" [routerLink]="['/programmesInfo',program._id]">{{ program.price | currency:'USD'}}</td>
-                    <td data-label="category" [routerLink]="['/programmesInfo',program._id]">{{ program.category}}</td>
-                    <td data-label="date" [routerLink]="['/programmesInfo',program._id]">{{ program.date | date : 'dd/MM/yyyy' }}</td>
-                    <td data-label="time" [routerLink]="['/programmesInfo',program._id]">{{ program.time }}</td>
+                    <td data-label="name" [routerLink]="['/programmesInfo',program._id]" >{{program.name}}</td>
+                    <td data-label="price" [routerLink]="['/programmesInfo',program._id]">{{program.price | currency:'USD'}}</td>
+                    <td data-label="category" [routerLink]="['/programmesInfo',program._id]">{{program.category}}</td>
+                    <td data-label="date" [routerLink]="['/programmesInfo',program._id]">{{program.date | date : 'dd/MM/yyyy' }}</td>
+                    <td data-label="time" [routerLink]="['/programmesInfo',program._id]">{{program.time }}</td>
               
                     </ng-container>
 
@@ -85,6 +85,7 @@
               <h5 *ngIf= "projectsArray.length == 0">
                   {{msg2}}
               </h5>
+
               <div class="table-responsive"  *ngIf="projectsArray.length != 0">
                  <table class="table table-hover">
                 
@@ -106,8 +107,8 @@
                       <img  src={{project.image}} name="Image" width="200" height="145">
                     </td>
                   </a>
-                    <td data-label="name" [routerLink]="['/programInfo',project._id]">{{ project.title}}</td>
-                    <td data-label="publish" [routerLink]="['/programInfo',project._id]">{{ project.publish  | date : 'dd/MM/yyyy' }}</td>
+                    <td data-label="name" [routerLink]="['/programInfo',project._id]">{{project.title}}</td>
+                    <td data-label="publish" [routerLink]="['/programInfo',project._id]">{{project.publish  | date : 'dd/MM/yyyy' }}</td>
                   
                    
                     </ng-container>
@@ -117,7 +118,7 @@
             
               </table>
               </div>
-           
+             <br>
               
        
             </div>

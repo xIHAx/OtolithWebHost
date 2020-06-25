@@ -40,7 +40,7 @@
                   <option *ngFor="let obj of i.slot">{{obj}}</option>
                 </select>
                 <div>
-                    <input type="text" class="form-control" id={{i._id}} name="username">
+                    <input type="text" class="form-control" id={{i._id}} name="username" placeholder="Enter username here">
                 </div>
                 <div>
                     <button type="button" class="btn btn-outline-success btn-block" (click)="addToPrograms(i._id)">Add</button>

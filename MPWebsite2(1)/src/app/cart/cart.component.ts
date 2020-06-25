@@ -58,11 +58,29 @@ export class CartComponent implements OnInit {
   }
 
   useGC(){
+    let value = (<HTMLSelectElement>document.getElementById("greenCurrencyInput")).value;
+    var gc = parseInt(value);
+    console.log(value);
     if(confirm('Do you want to deduct the total cost with your green currency?'))
     {
-      this.total = this.totalAmount() - this.userInfo[0].greenCurrency;
-      this.userGCA = 0;
-      this.clicked = true;   
+      if(value > this.userInfo[0].greenCurrency){
+        alert("You don't have enough green currency");
+        (<HTMLSelectElement>document.getElementById("greenCurrencyInput")).value = "0"
+      }
+      else if(gc > this.total){
+        alert("You can't use more green currency than the total amount");
+        (<HTMLSelectElement>document.getElementById("greenCurrencyInput")).value = "0"
+
+      }
+      else{
+        document.getElementById("greenCurrencyInput")
+        this.total = this.totalAmount() - gc;
+        this.userGCA = this.userGCA - gc;
+        this.clicked = true;
+        (<HTMLSelectElement>document.getElementById("greenCurrencyInput")).value = "0"
+  
+      }
+       
     }
     
   }
@@ -75,7 +93,7 @@ export class CartComponent implements OnInit {
     var afterGCDeduction: number;
 
     if(this.totalAmount() < 6){
-      alert('You have to spend a minimum of $6 before you can check out.')
+      alert('You have to spend a minimum of $6 before you can check out.');
     }
     else{
       if(this.clicked == true){

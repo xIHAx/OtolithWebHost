@@ -28,11 +28,39 @@
                                     
 
                 <div class="row form-group">
-                    <div class="col-md-12 mb-3 mb-md-0">
-                      <label class="font-weight-bold" for="address">Address:</label>
-                      <textarea cols="35" rows="3" id="address" formControlName="address" class="form-control" placeholder="Enter Address..."></textarea>
+                  <div class="col-md-12 mb-3 mb-md-0">
+                <label class="font-weight-bold" for="address">Postal Code.: (e.g. 123456)</label>
+                <input type="text" formControlName="address" id="address" class="form-control" placeholder="Enter house postal code..." maxlength="6" required>
+               </div>
+               </div>
+               
+               <div class="row form-group">
+                <div class="col-md-12 mb-3 mb-md-0">
+                    <label class="font-weight-bold" for="address">Type of housing:</label>
+                    <div class="form-check">
+                      <label class="form-check-label" for="radio1">
+                        <input type="radio" formControlName="radioBtn" id="radioHDB" value="HDB" checked>Public Housing (HDB flats)
+                      </label>
                     </div>
-                  </div>
+                    <div class="form-check">
+                      <label class="form-check-label" for="radio2">
+                        <input type="radio" formControlName="radioBtn" id="radioApartments" value="Condominiums">Private Condominiums / Apartments
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="radio" formControlName="radioBtn" id="radioLandedHousing" value="Landed Housing">Landed Housing
+                      </label>
+                    </div>
+                </div>
+                </div>
+  
+                <div class="row form-group">
+                    <div class="col-md-12 mb-3 mb-md-0">
+                   <label class="font-weight-bold" for="address">Unit Number.: (e.g. #01-123)</label>
+                   <input type="text" formControlName="unitNo" id="unitNo" class="form-control"  placeholder="Enter house unit number..."  required>
+                </div>
+                </div>
      
              
 

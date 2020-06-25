@@ -4,11 +4,12 @@
         <div class="section-title">    
         <h2>My Cart</h2>
         <br>
+        <br>
         <h5>{{msg}}</h5>
         </div>
        
           <!-- Shopping Cart table -->
-          <div class="table-responsive" *ngIf = !empty >
+          <div class="table-responsive" *ngIf = "empty === false" >
           
             <table class="table table-hover">
       
@@ -22,7 +23,7 @@
                     <strong>Image</strong>
                   </th>
                   <th class="font-weight-bold">
-                    <strong>Product</strong>
+                    <strong>Item</strong>
                   </th>
                   <th class="font-weight-bold">
                     <strong>Category</strong>
@@ -57,9 +58,9 @@
                   <td style="width:20%">
                   {{cart.name}}
                   </td>
-                  <td>{{cart.category}}</td>
+                  <td  style="width:10%">{{cart.category}}</td>
                  
-                  <td>{{cart.price | currency:'USD'}}</td>
+                  <td style="width:10%">{{cart.price | currency:'SGD'}}</td>
                   <td style="width:10%">
                   <button type="button" (click)="decreaseQuantity(cart._id,cart.quantity)" class="btn btn-success"> - </button>
                   {{cart.quantity}}
@@ -70,7 +71,7 @@
 
                   <td class="font-weight-bold">
                   
-                {{cart.price * cart.quantity | currency:'USD'}}
+                {{cart.price * cart.quantity | currency:'SGD'}}
                 </td>
                   
                   <td>
@@ -93,22 +94,31 @@
                     <strong>Total Amount : {{total | currency:'SGD'}}</strong>
                   </h4>
                 </td>
+                <td>
+                  
+                </td>
 
                 <td>
+                
+                </td>
+                
+                <td>
                   <h4>
-                    <strong>My Green Currency : {{ userGCA}}</strong>
+                    <strong>My Total Green Currency : {{ userGCA }}</strong>
                   </h4>
                 </td>
 
                 <td>
-                  <button type="button" (click)="useGC()" class="btn btn-success" >Use Green Currency
-                    </button>
+                  <div class="input-group">
+                    <input type="number" class="form-control" placeholder="0" id=greenCurrencyInput>
+                    <div class="input-group-append">
+                      <button class="btn btn-success" (click)="useGC()" type="button">Use Green Currency</button>
+                      <button class="btn btn-warning" (click)="undo()" type="button">Undo</button>
+                    </div>
+                  </div>
                 </td>
 
-                <td>
-                  <button type="button" (click)="undo()" class="btn btn-warning" >Undo
-                  </button>
-                </td>
+               
                
                 <td class="text-right">
                     <button type="button" (click)="passValue()" class="btn btn-success" >ORDER NOW
@@ -126,9 +136,7 @@
             </table>
       
           </div>
-          <br>
-          <br>
-          <br>
+        
           <!-- /.Shopping Cart table -->
      
       

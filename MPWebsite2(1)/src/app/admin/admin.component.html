@@ -48,7 +48,7 @@
           </td>
           <td data-label="Email" [routerLink]="['/userInfo',i._id]">{{ i.email }}</td>
           <td data-label="Mobile" [routerLink]="['/userInfo',i._id]">{{ i.mobile }}</td>
-          <td data-label="Address" [routerLink]="['/userInfo',i._id]">{{ i.address }}</td>
+          <td data-label="Address" [routerLink]="['/userInfo',i._id]">{{ i.address }} Unit No: {{ i.unitNo }}</td>
           <td data-label="greenCurrency" [routerLink]="['/userInfo',i._id]">{{ i.greenCurrency }}</td>
           <td data-label="delete">
             <button type="button" class="btn btn-danger" (click)="deleteUser(i._id)">Delete User</button>

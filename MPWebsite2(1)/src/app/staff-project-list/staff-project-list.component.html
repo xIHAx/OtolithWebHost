@@ -28,7 +28,7 @@
           </td>
         </a>
           <td data-label="Username" [routerLink]="['/programInfo',i._id]">{{ i.title}}</td>
-          <td data-label="publish" [routerLink]="['/programInfo',i._id]">{{ i.publish }}</td>
+          <td data-label="publish" [routerLink]="['/programInfo',i._id]">{{ i.publish | date : 'dd/MM/yyyy' }}</td>
             <td data-label="body" [routerLink]="['/programInfo',i._id]"><p>{{ i.body }}</p></td>
             <td data-label="attendees">
                 <select name="attendees" id={{i._id+1}} class="browser-default custom-select custom-select-lg mb-3">

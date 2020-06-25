@@ -41,24 +41,25 @@
           <p>{{programmesInfo[0].description}}</p>
          
         
-          <ng-container *ngIf="userAdmin">
-            <br>
-            <div style="text-align:center">
-              <a><strong>List of Residents that sign up:</strong></a>
-              <br>
-              <p *ngIf="programmesInfo[0].slot.length === 0">No resident sign up yet</p>
-            </div>
-          
-            <div *ngFor="let i of programmesInfo[0].slot">
-            
-            <div  style="text-align:center">
-              <p>Username : {{ i }}</p>
-            </div>
-           
-            </div>
-          </ng-container>
+       
     </div>
     </div>
+       <ng-container *ngIf="userAdmin">
+       <br>
+       <div style="text-align:center">
+        <a><strong>List of Residents that sign up:</strong></a>
+        <br>
+        <p *ngIf="programmesInfo[0].slot.length === 0">No resident sign up yet</p>
+      </div>
+    
+      <div *ngFor="let i of programmesInfo[0].slot">
+      
+      <div  style="text-align:center">
+        <p>Username : {{ i }}</p>
+      </div>
+     
+      </div>
+    </ng-container>
     </div>
     </div>
 

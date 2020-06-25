@@ -6,6 +6,7 @@
       <div class="section-title">
           <h2> My Wishlist</h2>
           <br>
+          <br>
           <h5>{{msg}}</h5>
       </div>
           <!-- Wishlist table -->
@@ -23,7 +24,7 @@
                     <strong>Image</strong>
                   </th>
                   <th class="font-weight-bold">
-                    <strong>Product</strong>
+                    <strong>Item</strong>
                   </th>
                   <th class="font-weight-bold">
                     <strong>Category</strong>
@@ -53,15 +54,15 @@
                 <tr *ngFor="let wishlist of wishlists;let i = index">
                   <th>  {{i + 1}} </th>
                   <th scope="row">
-                    <img src={{wishlist.image}} alt="" class="img-fluid z-depth-0">
+                    <img src={{wishlist.image}} alt="" class="img-fluid z-depth-0" width="350" height="350">
                   </th>
                  
-                  <td style="width:20%">
+                  <td>
                   {{wishlist.name}}
                   </td>
-                  <td>{{wishlist.category}}</td>
+                  <td style="width:10%">{{wishlist.category}}</td>
                  
-                  <td>{{wishlist.price | currency:'USD'}}</td>
+                  <td style="width:10%">{{wishlist.price | currency:'USD'}}</td>
                   <td style="width:10%">
                   <button type="button" (click)="decreaseQty(wishlist._id,wishlist.quantity)" class="btn btn-success"> - </button>
                   {{wishlist.quantity}}
@@ -75,7 +76,7 @@
                 {{wishlist.price * wishlist.quantity | currency:'USD'}}
                 </td>
                 <td> 
-                <p ><a *ngIf="service.isLoggedIn()" (click)="addToCart(wishlist.itemID,wishlist.name, wishlist.price, wishlist.category, wishlist.image, wishlist.quantity)" class="btn btn-success pill px-4 py-2 text-white" ><i class="fa fa-shopping-cart"></i>   ADD TO CART</a></p>
+                <p ><a *ngIf="service.isLoggedIn()" (click)="addToCart(wishlist.itemID, wishlist.name, wishlist.price, wishlist.category, wishlist.image, wishlist.quantity)" class="btn btn-primary pill px-4 py-2 text-white" ><i class="fa fa-shopping-cart"></i>   ADD TO CART</a></p>
                 </td>
                   
                   <td>
@@ -92,9 +93,7 @@
             </table>
       
           </div>
-          <br>
-          <br>
-          <br>
+         
           <!-- /Wishlist table -->
      
       

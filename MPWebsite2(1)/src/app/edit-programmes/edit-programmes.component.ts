@@ -21,7 +21,7 @@ export class EditProgrammesComponent implements OnInit {
  constructor(private fb: FormBuilder,private postsService: PostsService,private route: ActivatedRoute,private router: Router, private toastr: ToastrService) { }
 
  ngOnInit(){
-   console.log("Nav Edit Products Page");
+   console.log("Nav Edit Programs Page");
    this.sub = this.route.params.subscribe(params => {
      this._id = params['_id']; 
      

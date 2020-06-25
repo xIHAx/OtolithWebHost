@@ -17,10 +17,14 @@ export class OrderComponent implements OnInit {
   quantity: number;
   msg:string;
   empty: boolean;
+  program_ID:any = [];
   constructor(private postsService: PostsService,private toastr: ToastrService) {
     this.postsService.getOrders(sessionStorage.getItem("userID")).subscribe(orders => {
+
+    
       for (let i = 1; i <= this.orders.length; i++) {
         this.orders.push(`item ${i}`);
+        
       }
       this.orders = orders;
 
@@ -34,7 +38,6 @@ export class OrderComponent implements OnInit {
       }
     });
     this.postsService.getCart(sessionStorage.getItem("userID")).subscribe(carts => {
-      console.log(carts);
       this.carts = carts;
     });
   }
@@ -55,36 +58,46 @@ export class OrderComponent implements OnInit {
     return false; 
   }
 
+ 
 
 
-  deleteOrder(orderDate:Date)
+  deleteOrder(ID:string)
   {
     if(confirm('Are you sure you want to cancel your order ?'))
   {
     var currentdate= new Date().getDate();
-    console.log(currentdate);
+    
     for(var i = 0; i < this.orders.length; i++)
     {
-     
-      if(this.orders[i].order_date == orderDate)
+      
+      var orderDate = new Date(this.orders[i].order_date).getDate()+2;
+      var userName = sessionStorage.getItem("LoggedIn");
+   
+     console.log(orderDate);
+     console.log(currentdate);
+      if(orderDate >= currentdate && this.orders[i]._id == ID)
       {
-        var date = new Date(this.orders[i].order_date).getDate()+2;
-      }
-    }
-      console.log(currentdate);
-      console.log(date);
-      if(currentdate <= date) {
-        this.postsService.deleteOrder(orderDate).subscribe(results => {
+      console.log(this.orders[i].itemID);
+    
+      
+        this.postsService.removeFromPrograms(this.orders[i].itemID, userName).subscribe(results => {  
+        });
+        
+        
+        this.postsService.deleteOrder(ID).subscribe(results => {   
         location.reload();
        
         });
+        return;
       }
-    
-      else{
+    }
+
+      if(orderDate < currentdate){
         alert('Sorry! You are only allow to cancel your order within 2 days from your order date');
-       }   
-  
-  }
+       
+      }   
+    }
+      
  
 }
 }

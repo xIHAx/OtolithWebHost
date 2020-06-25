@@ -28,8 +28,9 @@ export class StatisticPageComponent implements OnInit {
   findLargest5(array){ 
     // sort descending
     array.sort(function(a,b){
-        if(a < b){ return 1; } 
-        else if(a == b) { return 0; } 
+
+        if(a[1] < b[1]){ return 1; } 
+        else if(a[1] == b[1]) { return 0; } 
         else { return -1; }
     });
     return [array[0], array[1], array[2], array[3], array[4]]
@@ -46,10 +47,10 @@ export class StatisticPageComponent implements OnInit {
   
   ngOnInit(): void {
     this.postsService.getAllOrders().subscribe(orders => {
-      console.log(orders);
+
       var productCatergory: any =[]
       for (var i = 0; i < orders.length; i++){
-        this.ordersProductName.push(orders[i].product_name);
+        this.ordersProductName.push(orders[i].name);
         productCatergory.push(orders[i].category); 
       }
       productCatergory = this.getWordCount(productCatergory);
@@ -59,8 +60,9 @@ export class StatisticPageComponent implements OnInit {
 
       var objProductNameCount = this.getWordCount(this.ordersProductName)
       this.entries = Object.entries(objProductNameCount);
-
+      console.log(this.entries);
       var top5SeliingProducts = this.findLargest5(this.entries);
+      console.log(top5SeliingProducts);
       var top5ProductNameArray: any = [];
       var top5ProductNameCountArray: any = [];
 
@@ -140,12 +142,16 @@ export class StatisticPageComponent implements OnInit {
     });
 
     this.postsService.getAllPrograms().subscribe(projects => {
-      console.log(projects);
       var test: any = []
       for (var i = 0; i < projects.length; i++){
         test.push([projects[i].title, projects[i].attendees.length]);
       }
+
       var test1 = this.findLargest5(test);
+      console.log(test1);
+      console.log(test1[1][1]);
+      console.log(test1[1][0]);
+
 
       for (var i = 0; i < test1.length; i++){
         this.projectName.push(test1[i][0]);
@@ -191,7 +197,7 @@ export class StatisticPageComponent implements OnInit {
     });
     
     this.postsService.getAllProgrammes().subscribe(programs => {
-      
+
       var test: any = []
       for (var i = 0; i < programs.length; i++){
         test.push([programs[i].name, programs[i].slot.length]);

@@ -24,7 +24,7 @@
     <p><input type="text" formControlName="mobile" id="mobile" minlength="8" placeholder="Your Mobile No." required></p>
 
     <label for="address">Postal Code.: (e.g. 123456)</label>
-    <p><input type="text" formControlName="address" id="address" placeholder="Your house postal code" maxlength="6" required></p>
+    <p><input type="text" formControlName="address" id="address" placeholder="Your house postal code" minlength="6" maxlength="6" required></p>
 
       <label for="address">Type of housing:</label>
       <div class="form-check">
@@ -43,7 +43,7 @@
         </label>
       </div>
       <br>
-      <label for="address">Unit Number.:</label>
+      <label for="address">Unit Number.: (e.g. #01-123)</label>
       <p><input type="text" formControlName="unitNo" id="unitNo" placeholder="Your house unit number" required></p>
 
     <label for="password">New Password (8 characters minimum):</label>

@@ -18,7 +18,8 @@
               
                 <div class="img-border">
                  <img  src={{orderInfo[0].image}} name ="orderImage" width="300" height="300">
-                 <p><strong>Product Name : {{orderInfo[0].product_name}}</strong></p>  
+                 <p><strong>ID : {{orderInfo[0].itemID}}</strong></p>  
+                 <p>Name : {{orderInfo[0].name}}</p>  
                  <p>Price : {{orderInfo[0].price | currency:'USD'}}</p>
                  <p>Category : {{orderInfo[0].category}}</p>
                  <p>Quantity : {{orderInfo[0].quantity}}</p>
@@ -40,6 +41,8 @@
              <p>Email : {{orderInfo[0].email}}</p>
              <p>Phone : {{orderInfo[0].phone}}</p>
              <p>Address : {{orderInfo[0].address}}</p>
+             <p>Unit No : {{orderInfo[0].unitNo}}</p>
+             <p>Housing Type : {{orderInfo[0].housingType}}</p>
              <br>
              <h5>Billing Information ：</h5>
              <p>Card Number : {{orderInfo[0].card_no}}</p>

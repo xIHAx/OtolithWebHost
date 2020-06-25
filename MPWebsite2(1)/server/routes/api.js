@@ -68,12 +68,13 @@ router.route('/sendEmailOrderConfirmation').post(function(req, res){
     let fullname = req.body[3].fullname;
     let residentEmail = req.body[3].email;
     let phone = req.body[3].phone;
-    let address = req.body[3].address;
+    let address = req.body[5];
+    let unitNo = req.body[3].unitNo;
+    let housingType = req.body[3].housingType;
     let cardType = req.body[3].card_type;
     let cardNo = req.body[3].card_no;
     let lastCardNo = cardNo.substr(-4);
     let staffEmail = ['otolithmp@gmail.com'];
-    
 
     // sent to resident
     let mailOptions = {
@@ -81,11 +82,12 @@ router.route('/sendEmailOrderConfirmation').post(function(req, res){
         from: fullname,
         subject: 'Order Confirmation',
         html: 'Hello ' + fullname +'<br><p>Thanks for shopping! You can find a summary of your order details below.'+
-        'Please allow up to 4 business days(excluding weekends,holidays and sale days) to process and ship your order.'+
-        'You will receive another email when your order has shipped.</p><br><h2>ORDER INFORMATION</h2>'+ 
+        'Please allow up to 4 business days(excluding weekends,holidays and sale days) to process your order.'+
+        'You will receive another email to provide you with more details when your order has processed.</p><br><h2>ORDER INFORMATION</h2>'+ 
         '<br>User ID : ' + userID + '<br>Resident Name : ' + fullname +'<br>Order Date : ' + orderDate + 
-        '<br>Paid with : Credit card - ' + cardType + ' ending in ' + lastCardNo + '<br>Product ordered : '  + productName +  '<br>Total Amount : $' +
-        totalAmount + '<br>Phone : ' + phone + '<br>Shipping Address : '  + address + '<br><br><p>We hope you enjoyed your shopping experience with us and that you will visit us again soon. Thank you!</p>' +
+        '<br>Paid with : Credit card - ' + cardType + ' ending in ' + lastCardNo + '<br>Product ordered/Program and Workshop registered  : '  + productName +  '<br>Total Amount : $' +
+        totalAmount + '<br>Email : ' + residentEmail + '<br>Phone : ' + phone + '<br>Address : '  + address + '<br>Unit Number : ' + unitNo + '<br>Type of Housing : ' + housingType + 
+        '<br><br><p>We hope you enjoyed your experience with us and that you will visit us again soon. Thank you!</p>' +
         'Otolith Enrichment<br><br><br><p>This is a computer generated reply. Please do not respond to this email.</p>'
     
     };
@@ -96,13 +98,15 @@ router.route('/sendEmailOrderConfirmation').post(function(req, res){
     from: fullname,
     subject: 'Resident Order',
     html: 'Dear Staff<br><p>'+'Please noted that ' + fullname + ' had make an order on ' + orderDate + '. '+
-    'You are require to process and ship the resident order within 4 business days(excluding weekends,holidays and sale days)'+
-    ' and sent an email to inform the resident when the order has shipped.You can find a summary of resident order details below.</p><br><h2>ORDER INFORMATION</h2>' + 
+    'You are require to process the resident order within 4 business days(excluding weekends,holidays and sale days)'+
+    ' and sent an email to provide the resident with more details when the order has processed.You can find a summary of resident order details below.</p><br><h2>ORDER INFORMATION</h2>' + 
     '<br>User ID : ' + userID + '<br>Resident Name : ' + fullname + '<br>Order Date : ' + orderDate + '<br>Paid with : Credit card - ' +  cardType + ' ending in ' + lastCardNo + 
-    '<br>Product ordered : ' + productName  + '<br>Total Amount : $' + totalAmount + '<br>Phone : ' + phone + '<br>Shipping Address : '  + address +
-    '<br><br><p>Please update the resident in the event of any changes.</p>' +'<br>Thank you<br><br><br><p>This is an automatically generated email.</p>'
+    '<br>Product ordered/Program and Workshop registered : ' + productName  + '<br>Total Amount : $' + totalAmount + '<br>Email : ' + residentEmail + '<br>Phone : ' + phone + 
+    '<br>Address : '  + address + '<br>Unit Number : ' + unitNo + '<br>Type of Housing : ' + housingType + '<br><br><p>Please update the resident in the event of any changes.</p>' +
+    '<br>Thank you<br><br><br><p>This is an automatically generated email.</p>'
     
     };
+
 
     transporter.sendMail(mailOptions, function (error, response) {
         if (error) {
@@ -159,19 +163,25 @@ router.route('/authuser').post(function(req, res2)
 
 // Send contact form
 router.route('/sendContact').post(function (req, res) {
+    let senderEmail = req.body.contactFormEmail
     let senderName = req.body.contactFormFullname;
     let messageSubject = req.body.contactFormSubject;
     let messageText = req.body.contactFormMessage;
     let staffEmailAddress = ['otolithmp@gmail.com'];
   
     let mailOptions3 = {
-      to: staffEmailAddress, 
-      from: senderName,
+      to: staffEmailAddress,
       subject: messageSubject,
-      text: messageText
+      text: " from " + senderEmail + " : " + messageText
     };
   
-  
+   if (senderEmail === '') {
+    res.status(400);
+    res.send({
+    message: 'Bad request'
+    });
+    return;
+  }
     
   if (senderName === '') {
     res.status(400);
@@ -247,8 +257,8 @@ router.route('/reguser').post(function(req, res)
         '<p>Address: ' + address + ' Unit Number: '+ unitNo +' Type of housing: '+ housingType +'</p>' +
         '<p>Please click on the "Verify Me" link bellow to verify your account. <br>'+
         'If you did not sign up with Otolith, please ignore this email or contact us at otolithmp@gmail.com</p><br>' + 
-        '<a href="http://localhost:3000/accountValidation/' + temporaryToken + '">Verify Me</a>',
-        replyTo: email
+        '<a href="https://warm-forest-40312.herokuapp.com/accountValidation/' + temporaryToken + '">Verify Me</a>'
+      
     };
 
     transporter.sendMail(mailOptions, function (error, response) {
@@ -299,7 +309,7 @@ router.route('/resetPassword').post(function(req, res)
         html:    
         'Dear Resident ' +'<br>'+ 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
         'Please click on the following link, or click on the reset password button to complete the process:<br>' +
-        'http://localhost:3000/resetPassword/'   + token + '\n\n' + '<br>' +
+        'https://warm-forest-40312.herokuapp.com/resetPassword/'   + token + '\n\n' + '<br>' +
         'If you did not request this, please ignore this email and your password will remain unchanged.\n'
         
     };
@@ -770,8 +780,8 @@ router.route('/order').post(function(req, res) {
     });
 
 // delete order
-router.route('/deleteOrder/:order_date').delete(function(req, res) {
-    db.collection('orders').deleteOne( {"order_date": req.params.order_date}, (err,
+router.route('/deleteOrder/:_id').delete(function(req, res) {
+    db.collection('orders').deleteOne( {"_id": ObjectId(req.params._id)}, (err,
     results) => {
     res.send(results);
     });
@@ -821,6 +831,14 @@ router.route('/wishlist/:_id').put(function(req, res) {
 // delete products from wishlist
 router.route('/deleteWishlist/:_id').delete(function(req, res) {
     db.collection('wishlist').deleteOne( {"_id": ObjectId(req.params._id)}, (err,
+    results) => {
+    res.send(results);
+    });
+    });
+
+// remove products from wishlist by itemID
+router.route('/removeWishlist/:itemID').delete(function(req, res) {
+    db.collection('wishlist').deleteOne( {"itemID": req.params.itemID}, (err,
     results) => {
     res.send(results);
     });

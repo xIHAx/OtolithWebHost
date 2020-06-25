@@ -147,8 +147,8 @@ export class PostsService {
    });
    }
 
-   addOrder (userID:string,itemID:string,product_name: string,price:number,category:string,image:string, quantity:number,amount:number,fullname: string, email:string,phone:number,address:string,order_date:Date,card_type:string,card_no:number,expiration:Date,cvc:number) {
-    return this.http.post<any[]>('./api/order/', {'userID':userID,'itemID':itemID,'product_name':product_name,'price':price,'category':category,'image':image,'quantity':quantity,'amount': amount,'fullname':fullname,'email':email,'phone':phone,'address': address,'order_date':order_date,'card_type':card_type,'card_no':card_no,'expiration':expiration,'cvc':cvc});
+   addOrder (userID:string,itemID:string,name: string,price:number,category:string,image:string, quantity:number,amount:number,fullname: string, email:string,phone:number,address:string,unitNo:string, housingType:string,order_date:Date,card_type:string,card_no:number,expiration:Date,cvc:number) {
+    return this.http.post<any[]>('./api/order/', {'userID':userID,'itemID':itemID,'name':name,'price':price,'category':category,'image':image,'quantity':quantity,'amount': amount,'fullname':fullname,'email':email,'phone':phone, "address": address, "unitNo": unitNo, "housingType":housingType,'order_date':order_date,'card_type':card_type,'card_no':card_no,'expiration':expiration,'cvc':cvc});
     }
 
     getAllOrders() {
@@ -164,8 +164,8 @@ export class PostsService {
       return this.http.get<any[]>('./api/orderInfo/' +_id);
     }
 
-    deleteOrder(orderDate: Date) {
-    return this.http.delete<any[]>('./api/deleteOrder/' + orderDate);
+    deleteOrder(id: string) {
+    return this.http.delete<any[]>('./api/deleteOrder/' + id);
     }
 
     
@@ -174,8 +174,8 @@ export class PostsService {
       return this.http.get<any[]>('./api/wishlist/' + uID);
     }
 
-    addToWishlist(userID: string, name: string, price:number,category: string, image:string, quantity:number) {
-      return this.http.post<any[]>('./api/addToWishlist/', {'userID' :userID ,'name':name,'price':price,'category':category,'image':image,'quantity':quantity});
+     addToWishlist(userID: string, itemID:string, name: string, price:number,category: string, image:string, quantity:number) {
+      return this.http.post<any[]>('./api/addToWishlist/', {'userID' :userID ,'itemID':itemID,'name':name,'price':price,'category':category,'image':image,'quantity':quantity});
       }
 
     increaseQty(id: number, newquantity: number) {
@@ -191,6 +191,10 @@ export class PostsService {
     deleteWishlist(id: string) {
       return this.http.delete<any[]>('./api/deleteWishlist/' + id);
       }    
+  
+    removeWishlist(itemID: string) {
+      return this.http.delete<any[]>('./api/removeWishlist/' + itemID);
+      }  
 
     getAllProgrammes() {
       return this.http.get<any[]>('./api/programmes');

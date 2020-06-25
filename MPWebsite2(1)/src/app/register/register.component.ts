@@ -75,11 +75,6 @@ export class RegisterComponent implements OnInit {
       this.toastr.warning('Invalid email!', 'Warning');
     }
 
-    else if(/#[\d]{2}-[\d]{3}/.test(this.myForm.value.unitNo) == false)
-    {
-      this.toastr.warning('Invalid unit no format', 'Warning');
-    }
-
     else if(this.myForm.controls.password.hasError('minlength'))
     {
       this.toastr.warning('Minimum 8 character is required for password!', 'Warning');
@@ -118,13 +113,21 @@ export class RegisterComponent implements OnInit {
           this.router.navigateByUrl('/login');
           this.toastr.success('Registered sucessfully, please go to you entered email to verify your account', 'Success');
         }
+        
         else{
-          userHouseLoc = location["results"][0]["ADDRESS"];
-          this.authService.regUser(this.myForm.value.name,
-          this.myForm.value.password, "user", this.myForm.value.email, this.myForm.value.mobile, userHouseLoc, this.myForm.value.unitNo, this.myForm.value.radioBtn).subscribe();
-          localStorage.setItem("regUsername", this.myForm.value.name);
-          this.router.navigateByUrl('/login');
-          this.toastr.success('Registered sucessfully, please go to you entered email to verify your account', 'Success');
+          if(/#[\d]{2}-[\d]{3}/.test(this.myForm.value.unitNo) == false)
+          {
+            this.toastr.warning('Invalid unit no format', 'Warning');
+          }
+          else{
+            userHouseLoc = location["results"][0]["ADDRESS"];
+            this.authService.regUser(this.myForm.value.name,
+            this.myForm.value.password, "user", this.myForm.value.email, this.myForm.value.mobile, userHouseLoc, this.myForm.value.unitNo, this.myForm.value.radioBtn).subscribe();
+            localStorage.setItem("regUsername", this.myForm.value.name);
+            this.router.navigateByUrl('/login');
+            this.toastr.success('Registered sucessfully, please go to you entered email to verify your account', 'Success');
+          }
+
         }
 
       }

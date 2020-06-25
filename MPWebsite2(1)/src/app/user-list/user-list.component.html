@@ -37,7 +37,7 @@
           <td data-label="Role" [routerLink]="['/userInfo',i._id]">{{ i.role }}</td>
           <td data-label="Email" [routerLink]="['/userInfo',i._id]">{{ i.email }}</td>
           <td data-label="Mobile" [routerLink]="['/userInfo',i._id]">{{ i.mobile }}</td>
-          <td data-label="Address" [routerLink]="['/userInfo',i._id]">{{ i.address }}</td>
+          <td data-label="Address" [routerLink]="['/userInfo',i._id]">{{ i.address }} {{ i.unitNo }}</td>
           <td data-label="greenCurrency" [routerLink]="['/userInfo',i._id]">{{ i.greenCurrency }}</td>
           <td data-label="collected" [routerLink]="['/userInfo',i._id]">{{ i.collected }}
             <button type="button" class="btn btn-warning" (click)="returnB(i._id, i.greenCurrency)">Return Box</button>

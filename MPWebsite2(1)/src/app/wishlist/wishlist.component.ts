@@ -63,6 +63,14 @@ export class WishlistComponent implements OnInit {
       });
     }
   }
+  
+  
+   removeWishlist(itemID:string)
+  {
+    this.postsService.removeWishlist(itemID).subscribe(results => {
+    
+      });
+  }
 
   increaseQty(id: number, oldquantity: string)
   {
@@ -117,9 +125,9 @@ export class WishlistComponent implements OnInit {
         this.category = pCat;
         this.image= pImg;
         this.quantity= pQty;
+        this.removeWishlist(this.ID);
         this.postsService.addToCart(sessionStorage.getItem("userID"), this.ID,this.name,this.price,this.category,this.image,this.quantity) .subscribe(results =>{
           this.toastr.success("Successfully added item to cart!", 'Success!');
-         
           })
         location.reload();
       }

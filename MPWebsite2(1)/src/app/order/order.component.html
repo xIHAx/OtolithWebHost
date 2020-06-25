@@ -2,6 +2,8 @@
 <div class="section-title">
 <h2> Order History</h2>
 <br>
+<br>
+
 <h5>{{msg}}</h5>
 </div>
 <!-- Order table -->
@@ -15,9 +17,11 @@
             <th class="font-weight-bold">
               <strong> Order ID #</strong>
             </th>
-            <th></th>
             <th class="font-weight-bold">
-              <strong>Product</strong>
+              <strong> Image</strong>
+            </th>
+            <th class="font-weight-bold">
+              <strong>Item</strong>
             </th>
             <th class="font-weight-bold">
               <strong>Category</strong>
@@ -47,16 +51,16 @@
           <!-- row -->
           <tr *ngFor="let order of orders | paginate: { itemsPerPage: 6, currentPage: p }">
            
-            <th  [routerLink]="['/orderInfo',order._id]">  {{order._id}} </th>
+            <th>  {{order._id}} </th>
            
-            <a [routerLink]="['/orderInfo',order._id]">
+            <a>
             <th scope="row">
               <img src={{order.image}} alt="" class="img-fluid z-depth-0">
             </th>
             </a>
            
-            <td a [routerLink]="['/orderInfo',order._id]"  style="width:15%">
-            {{order.product_name}}
+            <td style="width:15%">
+            {{order.name}}
             </td>
             
             <td style="width:8%">{{order.category}}</td>
@@ -72,7 +76,7 @@
           
 
           <td><button type="button" class="btn btn-success" [routerLink]="['/orderInfo',order._id]" >View Details</button></td>
-          <td><button type="button" class="btn btn-success" (click)="deleteOrder(order.order_date)" >Cancel</button></td>
+          <td><button type="button" class="btn btn-success" (click)="deleteOrder(order._id)" >Cancel</button></td>
         </tr>
           <!-- row -->
 
@@ -86,8 +90,6 @@
           <pagination-controls (pageChange)="p = $event"></pagination-controls>
      </div> 
     </div>
-    <br>
-    <br>
-    <br>
+  
     <!-- /.Order table -->
 
