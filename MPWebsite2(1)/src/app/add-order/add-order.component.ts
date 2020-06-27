@@ -25,6 +25,7 @@ export class AddOrderComponent implements OnInit {
   order_date: Date = new Date();
   emailContent: any = [];
   totalAmount:any;
+  userGCA:number;
   submitted : boolean;
   formProcess:boolean;
   itemID:string;
@@ -32,9 +33,11 @@ export class AddOrderComponent implements OnInit {
   
   constructor(private postsService: PostsService,private fb: FormBuilder,private toastr: ToastrService, private router: Router,private authService: AuthService,private connectionService: ConnectionService) {
     const navigation = this.router.getCurrentNavigation();
-    const state = navigation.extras.state as {total: string, ID:any};
+    const state = navigation.extras.state as {total: number, ID: any, userGCA: number};
+    this.userGCA = state.userGCA;
     this.totalAmount = state.total;
     this.programID = state.ID;
+    console.log(this.userGCA);
     console.log(this.totalAmount);
     console.log(this.programID);
    
@@ -152,6 +155,8 @@ export class AddOrderComponent implements OnInit {
         this.postsService.addOrder(sessionStorage.getItem("userID"),this.itemID,this.itemName,this.price,this.category,this.image,this.quantity,this.amount,this.addOrderForm.value.fullname,this.addOrderForm.value.email,this.addOrderForm.value.phone, userHouseLoc, "not applicable", this.addOrderForm.value.radioBtn,this.order_date,this.addOrderForm.value.card_type,this.addOrderForm.value.card_no,this.addOrderForm.value.expiration,this.addOrderForm.value.cvc).subscribe(results =>{
         this.clearCart();
         this.toastr.success("Successfully ordered!", 'Success!');
+        this.authService.useGC(sessionStorage.getItem("userID"), this.userGCA);
+
         });   
       }
       else{
@@ -166,6 +171,7 @@ export class AddOrderComponent implements OnInit {
           this.postsService.addOrder(sessionStorage.getItem("userID"),this.itemID,this.itemName,this.price,this.category,this.image,this.quantity,this.amount,this.addOrderForm.value.fullname,this.addOrderForm.value.email,this.addOrderForm.value.phone,userHouseLoc, this.addOrderForm.value.unitNo, this.addOrderForm.value.radioBtn,this.order_date,this.addOrderForm.value.card_type,this.addOrderForm.value.card_no,this.addOrderForm.value.expiration,this.addOrderForm.value.cvc).subscribe(results =>{  
           this.clearCart();
           this.toastr.success("Successfully ordered!", 'Success!');
+          this.authService.useGC(sessionStorage.getItem("userID"), this.userGCA);
           });  
         }  
         
@@ -177,7 +183,7 @@ export class AddOrderComponent implements OnInit {
  
       for (var i = 0; i < productArray.length; i++)
       {
-      productList += "<li>" + productArray[i] + "</li>";
+     productList += "<li>" + productArray[i] + " QTY: " + this.carts[i].quantity + "</li>";
    
       } 
        console.log(productList);
