@@ -60,6 +60,7 @@ router.route('/stripePayment').post(function (req, res){
       );
   });
 
+//sent order confirmation email
 router.route('/sendEmailOrderConfirmation').post(function(req, res){
     let userID = req.body[1];
     let productName = req.body[4];
@@ -70,7 +71,6 @@ router.route('/sendEmailOrderConfirmation').post(function(req, res){
     let phone = req.body[3].phone;
     let address = req.body[5];
     let unitNo = req.body[3].unitNo;
-    let housingType = req.body[3].housingType;
     let cardType = req.body[3].card_type;
     let cardNo = req.body[3].card_no;
     let lastCardNo = cardNo.substr(-4);
@@ -85,8 +85,8 @@ router.route('/sendEmailOrderConfirmation').post(function(req, res){
         'Please allow up to 4 business days(excluding weekends,holidays and sale days) to process your order.'+
         'You will receive another email to provide you with more details when your order has processed.</p><br><h2>ORDER INFORMATION</h2>'+ 
         '<br>User ID : ' + userID + '<br>Resident Name : ' + fullname +'<br>Order Date : ' + orderDate + 
-        '<br>Paid with : Credit card - ' + cardType + ' ending in ' + lastCardNo + '<br>Product ordered/Program and Workshop registered  : '  + productName +  '<br>Total Amount : $' +
-        totalAmount + '<br>Email : ' + residentEmail + '<br>Phone : ' + phone + '<br>Address : '  + address + '<br>Unit Number : ' + unitNo + '<br>Type of Housing : ' + housingType + 
+        '<br>Paid with : Credit card - ' + cardType + ' ending in ' + lastCardNo + '<br>Product ordered / Program and Workshop registered  : '  + productName +  '<br>Total Amount : $' +
+        totalAmount + '<br>Email : ' + residentEmail + '<br>Phone : ' + phone + '<br>Address : '  + address + '  Unit Number : ' + unitNo  + 
         '<br><br><p>We hope you enjoyed your experience with us and that you will visit us again soon. Thank you!</p>' +
         'Otolith Enrichment<br><br><br><p>This is a computer generated reply. Please do not respond to this email.</p>'
     
@@ -102,7 +102,7 @@ router.route('/sendEmailOrderConfirmation').post(function(req, res){
     ' and sent an email to provide the resident with more details when the order has processed.You can find a summary of resident order details below.</p><br><h2>ORDER INFORMATION</h2>' + 
     '<br>User ID : ' + userID + '<br>Resident Name : ' + fullname + '<br>Order Date : ' + orderDate + '<br>Paid with : Credit card - ' +  cardType + ' ending in ' + lastCardNo + 
     '<br>Product ordered/Program and Workshop registered : ' + productName  + '<br>Total Amount : $' + totalAmount + '<br>Email : ' + residentEmail + '<br>Phone : ' + phone + 
-    '<br>Address : '  + address + '<br>Unit Number : ' + unitNo + '<br>Type of Housing : ' + housingType + '<br><br><p>Please update the resident in the event of any changes.</p>' +
+    '<br>Address : '  + address + '  Unit Number : ' + unitNo + '<br><br><p>Please update the resident in the event of any changes.</p>' +
     '<br>Thank you<br><br><br><p>This is an automatically generated email.</p>'
     
     };
@@ -307,10 +307,10 @@ router.route('/resetPassword').post(function(req, res)
         from: 'otolithmp@gmail.com',
         subject: 'Reset Password Request',
         html:    
-        'Dear Resident ' +'<br>'+ 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+         'Dear Resident ' +'<br><br>'+ 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
         'Please click on the following link, or click on the reset password button to complete the process:<br>' +
-        'https://warm-forest-40312.herokuapp.com/resetPassword/'   + token + '\n\n' + '<br>' +
-        'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+         'https://warm-forest-40312.herokuapp.com/resetPassword/' + token + '\n\n' + '<br>' +
+        'If you did not request this, please ignore this email or contact us at otolithmp@gmail.com'
         
     };
 
@@ -383,26 +383,80 @@ router.route('/resetPasswordByName/:name').put(function(req, res)
     }); 
 }) 
 
+
+//Forgot Username
+router.route('/requestUsername').post(function(req, res) 
+{  
+  
+    let username = req.body[0];     
+    let email = req.body[1];
+    
+    console.log(username);
+    console.log(email);
+    
+
+    let mailOptions = {
+        to: email,
+        from: 'otolithmp@gmail.com',
+        subject: 'Username Request',
+        html:    
+        'Dear Resident ' +'<br><br>'+ 'You are receiving this because you (or someone else) have requested the username for your account.<br>' +
+        'Username : ' + username + '<br><br>' +
+        'If you did not request this, please ignore this email or contact us at otolithmp@gmail.com'
+        
+    };
+
+    transporter.sendMail(mailOptions, function (error, response) {
+        if (error) {
+            console.log(error);
+            res.end('error');
+        } else {
+            console.log('Message sent: ', response);
+            res.end('sent');
+    }
+    });
+
+    
+
+})
+
 //Verify Account
-router.route('/verifyAccount/:name').put(function(req, res) 
+router.route('/verifyAccount').post(function(req, res2) 
 {   
   
     var username = req.body.username; 
     var password = req.body.password;  
 
-    bcrypt.hash(password, BCRYPT_SALT_ROUNDS, function(err, hash)
-    {
-        db.collection('users').updateMany( {"name": username}, {$set:{ "password": hash, "verified":true}}, (err, result) => {
-            if (err){
-                return console.log(err);
-            } 
-            else{
-                console.log('Account verified');
-                res.send(result)
+    db.collection('users').findOne({"name": username}, { password: 1, role: 1, _id: 1, email:1, mobile:1, address:1 }, function(err, result) 
+    {   
+        if (result == null) 
+        res2.send([{"auth": false}]);
+        else {   
+        bcrypt.compare(password, result.password, function(err, res) 
+        {
+
+            if(err || res == false) 
+            {       
+                res2.send([{"auth": false}]);    
             }
-            
-       });
+        
+            else 
+            {      
+                res2.send([{"auth": true, "role": result.role, "userID":result._id, "mobile":result.mobile, "email":result.email, "address":result.address}]);   
+                db.collection('users').updateMany( {"name": username}, {$set:{ "verified": true}}, (err, result) => {
+                    if (err){
+                        return console.log(err);
+                    } 
+                    else{
+                        console.log('Account verified');
+                    }
+                        
+                });
+            }    
+        });
+    }   
     }); 
+
 }) 
 
 // get all Resident
