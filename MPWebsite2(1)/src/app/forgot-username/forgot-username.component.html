@@ -1,0 +1,15 @@
+
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <div class="container">
+      <h1>Forgot Username</h1>
+      <p>Please enter your registered email to request for your username</p>
+      <hr>
+  
+        <label for="email">Email</label>
+        <p><input type="email" formControlName="email" id="email" placeholder="Your Email" required></p>
+  
+      <hr>
+      <p><button class="btn" type="submit" >Submit</button></p>
+    </div>
+    
+  </form>
