@@ -26,14 +26,7 @@ export class AuthService {
   }
 
   verifyAccount( username: string, password: string) {
-    return this.http.put<any[]>('./api/verifyAccount/' + username, {"username": username, "password": password}
-    ).subscribe(
-    data  => {
-      console.log("PUT Request is successful ", data);  
-    },
-    error  => { 
-      console.log("Error", error);
-    });
+    return this.http.post<any[]>('./api/verifyAccount/' ,{"username": username, "password": password});
   }
   
   getAllResident() {
