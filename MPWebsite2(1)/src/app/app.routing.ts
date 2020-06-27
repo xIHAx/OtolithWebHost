@@ -40,6 +40,7 @@ import { StatisticPageComponent } from './statistic-page/statistic-page.componen
 import { AboutpageComponent } from './aboutpage/aboutpage.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ForgotUsernameComponent } from './forgot-username/forgot-username.component';
 
 const appRoutes: Routes = [  
     { path: 'register', component:RegisterComponent},  
@@ -80,6 +81,7 @@ const appRoutes: Routes = [
     { path: 'aboutPage', component:AboutpageComponent},
     { path: 'forgotPassword', component:ForgotPasswordComponent},
     { path: 'resetPassword/:passwordToken', component:ResetPasswordComponent},
+    { path: 'forgotUsername', component:ForgotUsernameComponent},
     { path: 'admin', component:AdminComponent, canActivate: [AuthGuard], data: {permission: {only: ["admin"]}}},  
     { path: '', component:HomeComponent, pathMatch:'full'} 
 ];
