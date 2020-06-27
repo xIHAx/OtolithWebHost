@@ -19,6 +19,7 @@ export class AuthService {
     'password':  pw });   
   }
 
+ 
   verifyUser(username: string, pw: string, token: string)  {    
     return this.http.post<any[]>('./api/verifyUser/', {'username': username, 
     'password':  pw, 'token': token });   
