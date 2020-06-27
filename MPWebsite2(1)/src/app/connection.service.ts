@@ -25,6 +25,10 @@ stripePayment(amount:number, email:string) {
 sendToResetPassword(messageContent: any) {
   return this.http.post('./api/resetPassword', JSON.stringify(messageContent), { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), responseType: 'text' });
 }
+  
+sendToRequestUsername(messageContent: any) {
+  return this.http.post('./api/requestUsername', JSON.stringify(messageContent), { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), responseType: 'text' });
+}
 
 getLocationByPostalCode(postalCode: number) {
   return this.http.get<any[]>('https://developers.onemap.sg/commonapi/search?searchVal='+postalCode+'&returnGeom=Y&getAddrDetails=Y&pageNum=1');
