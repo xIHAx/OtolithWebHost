@@ -91,23 +91,27 @@ export class CartComponent implements OnInit {
 
   passValue(){
     var afterGCDeduction: number;
-
-    if(this.totalAmount() < 6){
+    console.log(this.total);
+    afterGCDeduction = this.total
+    console.log(this.userGCA);
+    if(this.total < 6){
       alert('You have to spend a minimum of $6 before you can check out.');
     }
     else{
       if(this.clicked == true){
-        this.authService.useGC(sessionStorage.getItem("userID"), 0);
+        console.log(afterGCDeduction);
+        console.log("clicked");
+        
         for(var i = 0; i < this.carts.length; i++)
         {
           this.programIDList = this.carts[i].itemID;
           this.programIDArray.push(this.programIDList);
         }
-        afterGCDeduction = this.total - this.userInfo[0].greenCurrency
-        const navigationExtras: NavigationExtras = {state: {total: afterGCDeduction, ID: this.programIDArray}};
+        const navigationExtras: NavigationExtras = {state: {total: afterGCDeduction, ID: this.programIDArray, userGCA: this.userGCA}};
         this.router.navigate(['addOrder'], navigationExtras);
       }
       else{
+        console.log("clicked1");
         for(var i = 0; i < this.carts.length; i++)
         {
           this.programIDList = this.carts[i].itemID;
@@ -118,6 +122,7 @@ export class CartComponent implements OnInit {
         this.router.navigate(['addOrder'], navigationExtras);
     
       }
+    
     }
   }
 
