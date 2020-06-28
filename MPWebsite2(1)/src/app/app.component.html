@@ -72,6 +72,8 @@
           <a class="nav-link" routerLink="/wishlist" *ngIf="service.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">My Wishlist</a>
           <a class="nav-link" routerLink="/cart" *ngIf="service.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">My Cart</a>
           <a class="nav-link" routerLink="/order" *ngIf="service.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Order History</a>
+          <a class="nav-link" routerLink="/regPrograms" *ngIf="service.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Registered Program & Workshops</a>
+          <a class="nav-link" routerLink="/regProjects" *ngIf="service.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Registered Projects</a>
           <a class="nav-link" routerLink="/logout" *ngIf="service.isLoggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Logout</a>
         </div>
       </li>
