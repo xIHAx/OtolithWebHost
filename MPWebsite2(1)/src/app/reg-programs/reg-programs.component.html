@@ -38,8 +38,8 @@
                 <td>{{program.category}}</td>
                 <td>{{program.date | date : 'dd/MM/yyyy' }}</td>
                 <td>{{program.time }}</td>
-                <td><button type="button" class="btn btn-success" [routerLink]="['/programmesInfo',program._id]" >View Details</button></td>
-                <td><button type="button" class="btn btn-danger" (click)="removeProgram(program._id)" >Cancel</button></td>
+                <td style="width:10%"><button type="button" class="btn btn-success" [routerLink]="['/programmesInfo',program._id]" >View Details</button></td>
+                <td style="width:10%"><button type="button" class="btn btn-danger" (click)="removeProgram(program._id)" >Cancel</button></td>
 
                 </tr>
           
