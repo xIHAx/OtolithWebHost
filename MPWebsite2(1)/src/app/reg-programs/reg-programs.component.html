@@ -1,0 +1,51 @@
+
+      <br>
+      <div class="section-title">
+          <h2> My Program & Workshops</h2>
+          <br>
+          <br>
+          <h5 *ngIf="programsArray.length == 0">{{msg}}</h5>
+      </div>
+     <div class="table-responsive" *ngIf="programsArray.length != 0">
+          <table class="table table-hover">
+           
+              <thead class="thead-dark">
+                <tr>
+                  <th class="font-weight-bold"><strong>#</strong></th>
+                  <th class="font-weight-bold"><strong>Image</strong></th>
+                  <th class="font-weight-bold"><strong>Program Name</strong></th>
+                  <th class="font-weight-bold" style="width:10%"><strong>Price</strong></th>
+                  <th class="font-weight-bold" style="width:10%"><strong>Category</strong></th>
+                  <th class="font-weight-bold" style="width:10%"><strong>Date</strong></th>
+                  <th class="font-weight-bold" style="width:10%"><strong>Time</strong></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+
+              <tbody *ngFor="let program of programsArray;let i = index">
+                
+              <tr>
+                
+               <td>{{i+1}}</td>
+                  <a>
+                    <td>
+                      <img  src={{program.image}} name="Image" width="200" height="145">
+                    </td>
+                  </a>
+                <td>{{program.name}}</td>
+                <td>{{program.price | currency:'USD'}}</td>
+                <td>{{program.category}}</td>
+                <td>{{program.date | date : 'dd/MM/yyyy' }}</td>
+                <td>{{program.time }}</td>
+                <td><button type="button" class="btn btn-success" [routerLink]="['/programmesInfo',program._id]" >View Details</button></td>
+                <td><button type="button" class="btn btn-danger" (click)="removeProgram(program._id)" >Cancel</button></td>
+
+                </tr>
+          
+            </tbody>
+          </table>
+
+     </div>
+        
+          
