@@ -41,6 +41,8 @@ import { AboutpageComponent } from './aboutpage/aboutpage.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ForgotUsernameComponent } from './forgot-username/forgot-username.component';
+import { RegProgramsComponent } from './reg-programs/reg-programs.component';
+import { RegProjectsComponent } from './reg-projects/reg-projects.component';
 
 const appRoutes: Routes = [  
     { path: 'register', component:RegisterComponent},  
@@ -82,6 +84,8 @@ const appRoutes: Routes = [
     { path: 'forgotPassword', component:ForgotPasswordComponent},
     { path: 'resetPassword/:passwordToken', component:ResetPasswordComponent},
     { path: 'forgotUsername', component:ForgotUsernameComponent},
+    { path: 'regPrograms', component:RegProgramsComponent},
+    { path: 'regProjects', component:RegProjectsComponent},
     { path: 'admin', component:AdminComponent, canActivate: [AuthGuard], data: {permission: {only: ["admin"]}}},  
     { path: '', component:HomeComponent, pathMatch:'full'} 
 ];
