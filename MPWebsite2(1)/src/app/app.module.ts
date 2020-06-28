@@ -59,6 +59,8 @@ import { StatisticPageComponent } from './statistic-page/statistic-page.componen
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ForgotUsernameComponent } from './forgot-username/forgot-username.component';
+import { RegProgramsComponent } from './reg-programs/reg-programs.component';
+import { RegProjectsComponent } from './reg-projects/reg-projects.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +106,9 @@ import { ForgotUsernameComponent } from './forgot-username/forgot-username.compo
     StatisticPageComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    ForgotUsernameComponent
+    ForgotUsernameComponent,
+    RegProgramsComponent,
+    RegProjectsComponent
     ],
   imports: [
     
