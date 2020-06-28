@@ -1,0 +1,42 @@
+
+      <br>
+      <div class="section-title">
+          <h2> My Projects</h2>
+          <br>
+          <br>
+          <h5 *ngIf="projectsArray.length == 0">{{msg}}</h5>
+      </div>
+<div class="table-responsive"  *ngIf="projectsArray.length != 0">
+    <table class="table table-hover">
+   
+     <thead class="thead-dark">
+       <tr>
+         <th class="font-weight-bold"><strong>#</strong></th>
+         <th class="font-weight-bold"><strong>Image</strong></th>
+         <th class="font-weight-bold"><strong>Project Name</strong></th>
+         <th class="font-weight-bold"><strong>Date</strong></th>
+         <th class="font-weight-bold"><strong>Description</strong></th>
+         <th></th>
+         <th></th>
+       </tr>
+     </thead>
+     
+     <tbody *ngFor="let project of projectsArray;let i = index">
+     <tr>
+    
+       <td>{{i+1}}</td>
+     <a>
+       <td>
+         <img  src={{project.image}} name="Image" width="200" height="145">
+       </td>
+     </a>
+       <td>{{project.title}}</td>
+       <td>{{project.publish  | date : 'dd/MM/yyyy' }}</td>
+       <td>{{project.body}}</td>
+       <td><button type="button" class="btn btn-success" [routerLink]="['/programInfo',project._id]" >View Details</button></td>
+       <td><button type="button" class="btn btn-danger" (click)="removeProject(project._id)" >Cancel</button></td>
+     </tr>
+   </tbody>
+
+ </table>
+ </div>
