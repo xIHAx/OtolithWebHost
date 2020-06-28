@@ -33,8 +33,8 @@
        <td>{{project.title}}</td>
        <td>{{project.publish  | date : 'dd/MM/yyyy' }}</td>
        <td>{{project.body}}</td>
-       <td><button type="button" class="btn btn-success" [routerLink]="['/programInfo',project._id]" >View Details</button></td>
-       <td><button type="button" class="btn btn-danger" (click)="removeProject(project._id)" >Cancel</button></td>
+       <td style="width:10%"><button type="button" class="btn btn-success" [routerLink]="['/programInfo',project._id]" >View Details</button></td>
+       <td style="width:10%"><button type="button" class="btn btn-danger" (click)="removeProject(project._id)" >Cancel</button></td>
      </tr>
    </tbody>
 
