@@ -58,14 +58,14 @@ export class UserProfileComponent implements OnInit {
 
   onSubmit() {
     //Check if all input fields are filled
-    if(this.myForm.value.password == "" || this.myForm.value.email == "" || this.myForm.value.mobile == "" || this.myForm.value.address == ""){
+    if(this.myForm.value.password == "" || this.myForm.value.repassword == "" || this.myForm.value.mobile == "" ){
       this.toastr.warning('Fill in all input fields!', 'Warning');
     }
 
-    else if(this.myForm.controls.email.hasError('email'))
-    {
-      this.toastr.warning('Invalid email!', 'Warning');
-    }
+    // else if(this.myForm.controls.email.hasError('email'))
+    // {
+    //   this.toastr.warning('Invalid email!', 'Warning');
+    // }
 
     else if(this.myForm.controls.password.hasError('minlength'))
     {
@@ -82,27 +82,19 @@ export class UserProfileComponent implements OnInit {
     {
       this.toastr.warning('Invalid phone number! Minimum 8 character for phone number', 'Warning');
     }
-    
-    else if(this.myForm.controls.address.hasError('minlength') || this.myForm.controls.address.hasError('maxlength'))
+
+    else if(/[\d]{8}/.test(this.myForm.value.mobile) == false)
     {
-      this.toastr.warning('Invalid postal code!', 'Warning');
+      this.toastr.warning('Invalid phone number format!', 'Warning');
     }
+    
    
     //Update user with input from myForm 
     else{
       
-      var userHouseLoc
-      this.connectionService.getLocationByPostalCode(this.myForm.value.address).subscribe(location => {
-        console.log(this.myForm.value.housingType);
-        if(location["results"][0] == null){
-          this.toastr.warning('Invalid Postal Code', 'Warning');
-        }
-        
-        else if(this.myForm.value.housingType == "Landed Housing"){
-          userHouseLoc = location["results"][0]["ADDRESS"];
           this.toastr.success('User has been updated', 'Success');
-          this.authService.updateUser( this.myForm.value.name, this.myForm.value.password, this.myForm.value.email, this.myForm.value.mobile, userHouseLoc, "not applicable", this.myForm.value.housingType);
-          sessionStorage.setItem("address", userHouseLoc);
+          this.authService.updateUser( this.myForm.value.name, this.myForm.value.password, this.myForm.value.email, this.myForm.value.mobile, this.myForm.value.address, this.myForm.value.unitNo, this.myForm.value.housingType);
+          sessionStorage.setItem("address", this.myForm.value.address);
           sessionStorage.setItem("email", this.myForm.value.email);
           sessionStorage.setItem("mobile", this.myForm.value.mobile);
           sessionStorage.setItem("unitNo", this.myForm.value.unitNo);
@@ -110,32 +102,6 @@ export class UserProfileComponent implements OnInit {
           window.location.reload();
         }
 
-        else{
-          if(/#[\d]{2}-[\d]{3}/.test(this.myForm.value.unitNo) == false)
-          {
-            console.log("goes here");
-            this.toastr.warning('Invalid unit no format', 'Warning');
-          }
-          else{
-            userHouseLoc = location["results"][0]["ADDRESS"];
-            this.toastr.success('User has been updated', 'Success');
-            this.authService.updateUser( this.myForm.value.name, this.myForm.value.password, this.myForm.value.email, this.myForm.value.mobile, userHouseLoc, this.myForm.value.unitNo, this.myForm.value.housingType);
-            sessionStorage.setItem("address", userHouseLoc);
-            sessionStorage.setItem("email", this.myForm.value.email);
-            sessionStorage.setItem("mobile", this.myForm.value.mobile);
-            sessionStorage.setItem("unitNo", this.myForm.value.unitNo);
-            sessionStorage.setItem("housingType", this.myForm.value.housingType);
-            window.location.reload();
-          }
-         
-        }
-
-      }
-     
-      );
-
-
-    }
 
   }
 
