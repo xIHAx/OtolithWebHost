@@ -1,3 +1,5 @@
+
+
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -116,6 +118,11 @@ export class AddOrderComponent implements OnInit {
       this.toastr.warning('Invalid phone number! Minimum 8 character for phone number', 'Warning');
     }
 
+    else if(/[\d]{8}/.test(this.addOrderForm.value.phone) == false)
+    {
+      this.toastr.warning('Invalid phone number format!', 'Warning');
+    }
+
     else if(this.addOrderForm.controls.address.hasError('minlength') || this.addOrderForm.controls.address.hasError('maxlength'))
     {
       this.toastr.warning('Invalid postal code!', 'Warning');
@@ -128,17 +135,15 @@ export class AddOrderComponent implements OnInit {
 
     else if(confirm('Are you sure you want to order now ?'))
       { 
-        this.StripePayment();
-        this.addToPrograms();
-      
+       
+       
         var userHouseLoc
         this.connectionService.getLocationByPostalCode(this.addOrderForm.value.address).subscribe(location => {
-        userHouseLoc = location["results"][0]["ADDRESS"];
-        localStorage.setItem("userHouseLoc",userHouseLoc);
+          
+      
       for(var i = 0; i < this.carts.length; i++)
       {
           
-    
         this.itemID = this.carts[i].itemID;
         this.itemName = this.carts[i].name;
         productArray.push(this.carts[i].name);
@@ -148,15 +153,21 @@ export class AddOrderComponent implements OnInit {
         this.image = this.carts[i].image;
         this.quantity = this.carts[i].quantity;
         this.amount = this.carts[i].price * this.carts[i].quantity;
-        
+
+      if(location["results"][0] == null){
+      this.toastr.warning('Invalid Postal Code', 'Warning');
+      return;
+      }
+             
      
-      if(this.addOrderForm.value.radioBtn == "Landed Housing"){
-      
+      else if(this.addOrderForm.value.radioBtn == "Landed Housing"){
+        userHouseLoc = location["results"][0]["ADDRESS"];
+        localStorage.setItem("userHouseLoc",userHouseLoc);
         this.postsService.addOrder(sessionStorage.getItem("userID"),this.itemID,this.itemName,this.price,this.category,this.image,this.quantity,this.amount,this.addOrderForm.value.fullname,this.addOrderForm.value.email,this.addOrderForm.value.phone, userHouseLoc, "not applicable", this.addOrderForm.value.radioBtn,this.order_date,this.addOrderForm.value.card_type,this.addOrderForm.value.card_no,this.addOrderForm.value.expiration,this.addOrderForm.value.cvc).subscribe(results =>{
         this.clearCart();
         this.toastr.success("Successfully ordered!", 'Success!');
         this.authService.useGC(sessionStorage.getItem("userID"), this.userGCA);
-
+       
         });   
       }
       else{
@@ -168,18 +179,22 @@ export class AddOrderComponent implements OnInit {
           return
         }
         else{
+          userHouseLoc = location["results"][0]["ADDRESS"];
+          localStorage.setItem("userHouseLoc",userHouseLoc);
           this.postsService.addOrder(sessionStorage.getItem("userID"),this.itemID,this.itemName,this.price,this.category,this.image,this.quantity,this.amount,this.addOrderForm.value.fullname,this.addOrderForm.value.email,this.addOrderForm.value.phone,userHouseLoc, this.addOrderForm.value.unitNo, this.addOrderForm.value.radioBtn,this.order_date,this.addOrderForm.value.card_type,this.addOrderForm.value.card_no,this.addOrderForm.value.expiration,this.addOrderForm.value.cvc).subscribe(results =>{  
           this.clearCart();
           this.toastr.success("Successfully ordered!", 'Success!');
           this.authService.useGC(sessionStorage.getItem("userID"), this.userGCA);
+         
           });  
         }  
         
        }
            
      }
-    
-   
+     
+     this.StripePayment();
+     this.addToPrograms();
  
       for (var i = 0; i < productArray.length; i++)
       {
@@ -196,18 +211,17 @@ export class AddOrderComponent implements OnInit {
        this.emailContent.push(localStorage.getItem("userHouseLoc"));
 
 
-       (error:any) => {
-        this.toastr.warning('Invalid Postal Code', 'Warning');
-        alert('Invalid Postal Code')
-        console.log("Error: ", error);
-      };
+      //  (error:any) => {
+      //   this.toastr.warning('Invalid Postal Code', 'Warning');
+      //   alert('Invalid Postal Code')
+      //   console.log("Error: ", error);
+      // };
     
 
        // sent to email
        this.connectionService.sendMessage(this.emailContent).subscribe(() => {
          this.addOrderForm.reset();
          window.location.reload();
-         
        }, (error: any) => {
          console.log('Error', error);
        });
@@ -224,6 +238,7 @@ export class AddOrderComponent implements OnInit {
     this.connectionService.stripePayment(this.totalAmount, sessionStorage.getItem("email")).subscribe(() =>
     {
       console.log('stripe payment works')
+     
     },(error: any) =>{
       console.log('Error', error);
     });
@@ -231,3 +246,8 @@ export class AddOrderComponent implements OnInit {
 
 
 }
+
+
+
+
+
