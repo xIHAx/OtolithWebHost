@@ -3,7 +3,7 @@
         <h2 class="mb-5"> {{programInfo[0].title}} </h2>
         <p>Date Published: {{programInfo[0].publish | date : 'dd/MM/yyyy'}}</p> 
         <br>
-        <img src={{programInfo[0].image}} alt="" class="img-fluid">
+        <img src={{programInfo[0].image}} alt="" class="img-fluid" width="700" height="700">
        <br>
        <br>
        <a [routerLink]="['/editProgram',_id]"><img src="./assets/imgs/edit.png" width="40" height="40"></a>			

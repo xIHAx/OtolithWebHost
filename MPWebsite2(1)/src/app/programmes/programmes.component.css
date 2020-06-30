@@ -4,7 +4,7 @@
     font-size: 20px;
     color: white;
     padding: 16px 20px;
-    margin: 8px 0;
+    margin: 8px 24px;
     border: none;
     cursor: pointer;
     opacity: 0.8;
@@ -54,6 +54,7 @@
     text-align:right;
     width:100%;
     bottom:0px;
+    right: 16px;
   }
 
   .card {

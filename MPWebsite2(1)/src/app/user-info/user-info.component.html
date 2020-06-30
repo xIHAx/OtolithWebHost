@@ -43,32 +43,29 @@
                
                   <thead class="thead-dark">
                     <tr>
-                      <th scope="col">Image</th>
-                      <th scope="col">Program Name</th>
-                      <th scope="col" style="width:10%">Price</th>
-                      <th scope="col" style="width:10%">Category</th>
-                      <th scope="col" style="width:10%">Date</th>
-                      <th scope="col" style="width:10%">Time</th>
+                      <th class="font-weight-bold"><strong>Image</strong></th>
+                      <th class="font-weight-bold"><strong>Program Name</strong></th>
+                      <th class="font-weight-bold"><strong>Price</strong></th>
+                      <th class="font-weight-bold"><strong>Category</strong></th>
+                      <th class="font-weight-bold"><strong>Date</strong></th>
+                      <th class="font-weight-bold"><strong>Time</strong></th>
                     </tr>
                   </thead>
 
                   <tbody *ngFor="let program of programsArray">
                     
                   <tr>
-                    <ng-container>
-                   
-                      <a [routerLink]="['/programmesInfo',program._id]" >
-                        <td data-label="qr">
+                      <a [routerLink]="['/programmesInfo',program._id]">
+                        <td data-label="image">
                           <img  src={{program.image}} name="Image" width="200" height="145">
                         </td>
                       </a>
-                    <td data-label="name" [routerLink]="['/programmesInfo',program._id]" >{{program.name}}</td>
-                    <td data-label="price" [routerLink]="['/programmesInfo',program._id]">{{program.price | currency:'USD'}}</td>
-                    <td data-label="category" [routerLink]="['/programmesInfo',program._id]">{{program.category}}</td>
-                    <td data-label="date" [routerLink]="['/programmesInfo',program._id]">{{program.date | date : 'dd/MM/yyyy' }}</td>
-                    <td data-label="time" [routerLink]="['/programmesInfo',program._id]">{{program.time }}</td>
+                    <td data-label="name" [routerLink]="['/programmesInfo',program._id]">{{program.name}}</td>
+                    <td data-label="price" [routerLink]="['/programmesInfo',program._id]"style="width:10%">{{program.price | currency:'USD'}}</td>
+                    <td data-label="category" [routerLink]="['/programmesInfo',program._id]" style="width:10%">{{program.category}}</td>
+                    <td data-label="date" [routerLink]="['/programmesInfo',program._id]" style="width:10%">{{program.date | date : 'dd/MM/yyyy' }}</td>
+                    <td data-label="time" [routerLink]="['/programmesInfo',program._id]" style="width:15%">{{program.time }}</td>
               
-                    </ng-container>
 
                     </tr>
               
@@ -91,27 +88,25 @@
                 
                   <thead class="thead-dark">
                     <tr>
-                      <th scope="col">Image</th>
-                      <th scope="col">Project Name</th>
-                      <th scope="col">Date</th>
+                      <th class="font-weight-bold"><strong>Image</strong></th>
+                      <th class="font-weight-bold"><strong>Project Name</strong></th>
+                      <th class="font-weight-bold"><strong>Date</strong></th>
                     
                     </tr>
                   </thead>
                   
                   <tbody *ngFor="let project of projectsArray">
                   <tr>
-                    <ng-container>
+                 
                     
-                  <a [routerLink]="['/programInfo',project._id]" >
-                    <td data-label="qr">
+                  <a [routerLink]="['/programInfo',project._id]">
+                    <td data-label="image">
                       <img  src={{project.image}} name="Image" width="200" height="145">
                     </td>
                   </a>
                     <td data-label="name" [routerLink]="['/programInfo',project._id]">{{project.title}}</td>
                     <td data-label="publish" [routerLink]="['/programInfo',project._id]">{{project.publish  | date : 'dd/MM/yyyy' }}</td>
                   
-                   
-                    </ng-container>
        
                   </tr>
                 </tbody>

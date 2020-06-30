@@ -24,27 +24,27 @@
     <p><input type="text" formControlName="mobile" id="mobile" minlength="8" placeholder="Your Mobile No." required></p>
 
     <label for="address">Postal Code.: (e.g. 123456)</label>
-    <p><input type="text" formControlName="address" id="address" placeholder="Your house postal code" minlength="6" maxlength="6" required></p>
+    <p><input type="text" formControlName="address" id="address" placeholder="Your house postal code" minlength="6" maxlength="6" disabled></p>
 
       <label for="address">Type of housing:</label>
       <div class="form-check">
         <label class="form-check-label" for="radio1">
-          <input type="radio" formControlName="housingType" id="radioHDB" value="HDB" checked>Public Housing (HDB flats)
+          <input type="radio" formControlName="housingType" id="radioHDB" value="HDB" checked disabled>Public Housing (HDB flats)
         </label>
       </div>
       <div class="form-check">
         <label class="form-check-label" for="radio2">
-          <input type="radio" formControlName="housingType" id="radioApartments" value="Condominiums">Private Condominiums / Apartments
+          <input type="radio" formControlName="housingType" id="radioApartments" value="Condominiums" disabled>Private Condominiums / Apartments
         </label>
       </div>
       <div class="form-check">
         <label class="form-check-label">
-          <input type="radio" formControlName="housingType" id="radioLandedHousing" value="Landed Housing">Landed Housing
+          <input type="radio" formControlName="housingType" id="radioLandedHousing" value="Landed Housing" disabled>Landed Housing
         </label>
       </div>
       <br>
       <label for="address">Unit Number.: (e.g. #01-123)</label>
-      <p><input type="text" formControlName="unitNo" id="unitNo" placeholder="Your house unit number" required></p>
+      <p><input type="text" formControlName="unitNo" id="unitNo" placeholder="Your house unit number" disabled></p>
 
     <label for="password">New Password (8 characters minimum):</label>
     <p><input type="password" formControlName="password" id="password" placeholder="Your password" [(ngModel)]="account.password" minlength="8" required></p>

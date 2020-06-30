@@ -55,6 +55,7 @@ export class ProductsComponent implements OnInit {
     this.postsService.getProductsByCategory(this.type).subscribe(Data => 
       {
         this.products = Data;
+        this.loadedproductList = Data;
         console.log("Product by category:", Data);
       });
     }
