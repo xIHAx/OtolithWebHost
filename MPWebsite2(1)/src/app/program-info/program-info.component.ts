@@ -35,9 +35,10 @@ export class ProgramInfoComponent implements OnInit {
 
   deleteProgram()
   {   
-    if(confirm('Do you want to delete it ?'))
+    if(confirm('Are you sure that you want to delete this project ?'))
     {
     this.postsService.deleteProgram(this._id).subscribe(results => {
+    this.toastr.success("Successfully deleted!", 'Success!');
     this.router.navigateByUrl('/programs');
     });
     }

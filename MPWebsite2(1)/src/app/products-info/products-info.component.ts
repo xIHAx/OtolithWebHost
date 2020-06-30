@@ -62,9 +62,10 @@ export class ProductsInfoComponent implements OnInit {
 
   deleteProducts()
   {
-    if(confirm('Do you want to delete it ?'))
+    if(confirm('Are you sure that you want to delete this product ?'))
     {
   this.postsService.deleteProducts(this._id).subscribe(results => {
+    this.toastr.success("Successfully deleted!", 'Success!');
     this.router.navigateByUrl('/products/All');
   });
     }
@@ -114,7 +115,7 @@ export class ProductsInfoComponent implements OnInit {
       this.toastr.warning('Product is already in your wishlist', 'Warning');
     }
     else{
-      if(confirm('Do you want to add item ?'))
+      if(confirm('Do you want to add item to your wishlist ?'))
     {
      this.itemID=this.productsInfo[0]._id; 
      this.name=this.productsInfo[0].name;

@@ -34,6 +34,7 @@ export class NewsInfoComponent implements OnInit {
     if(confirm('Do you want to delete it ?'))
    {
     this.postsService.deleteNews(this._id).subscribe(results => {
+    this.toastr.success("Successfully deleted!", 'Success!');
     this.router.navigateByUrl('/news');
   });
    }

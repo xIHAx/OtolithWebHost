@@ -46,6 +46,7 @@ export class StatisticPageComponent implements OnInit {
   }
   
   ngOnInit(): void {
+    
     this.postsService.getAllOrders().subscribe(orders => {
 
       var productCatergory: any =[]
@@ -247,7 +248,10 @@ export class StatisticPageComponent implements OnInit {
       });
       
     });//end of top 5 popular Program
+  
 
   }
+
+
 
 }

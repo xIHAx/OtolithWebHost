@@ -60,7 +60,7 @@ router.route('/stripePayment').post(function (req, res){
       );
   });
 
-router.route('/sendEmailOrderConfirmation').post(function(req, res){
+  router.route('/sendEmailOrderConfirmation').post(function(req, res){
     let userID = req.body[1];
     let productName = req.body[4];
     let totalAmount = req.body[2];

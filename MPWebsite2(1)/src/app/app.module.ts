@@ -58,6 +58,7 @@ import { DisqusModule } from "ngx-disqus";
 import { StatisticPageComponent } from './statistic-page/statistic-page.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ForgotUsernameComponent } from './forgot-username/forgot-username.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     UserInfoComponent,
     StatisticPageComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    ForgotUsernameComponent
   
     ],
   imports: [
