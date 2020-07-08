@@ -30,9 +30,9 @@
 
         <br>
         <div style="text-align:center">
-          <a>List of Residents that sign up:</a>
+          <a>List of Users that sign up:</a>
           <br>
-           <p *ngIf="programInfo[0].attendees.length === 0">No resident sign up yet</p>
+           <p *ngIf="programInfo[0].attendees.length === 0">No user sign up yet</p>
         </div>
         <div style="text-align:center" *ngFor="let i of programInfo[0].attendees">
           <p>Username: {{ i }}</p>
