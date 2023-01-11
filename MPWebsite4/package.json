@@ -38,7 +38,7 @@
     "express": "^4.17.1",
     "font-awesome": "^4.7.0",
     "formidable": "^1.2.2",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "jwt-simple": "^0.5.6",
     "mongodb": "^3.5.7",
     "ng2-search-filter": "^0.5.1",
